@@ -111,6 +111,6 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'Customers'], function () {
     Route::post('Profile/change-password', 'ProfileController@store')->name('change.password');
     Route::get('logout', 'ProfileController@logout')->name('admin.logout');
     Route::get('Invoice', 'InvoiceController@index')->name('Customer.Invoice.index');
-    Route::get('Payment', 'InvoiceController@index')->name('Customer.Invoice.index');
+    Route::get('Payment', 'PaymentController@index')->name('Customer.Payment.index');
 
 });

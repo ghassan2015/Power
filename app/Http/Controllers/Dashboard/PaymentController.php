@@ -16,7 +16,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $button = '';
-        $Invoices = Invoice::all();
+
         if ($request->ajax()) {
             $data = Payment::with('Invoice')->get();
             return Datatables::of($data)
@@ -46,7 +46,7 @@ class PaymentController extends Controller
                 ->make(true);
 
         }
-        return view('Pages.Payment.index', compact('Invoices'));
+        return view('Pages.Payment.index');
     }
 
     /**

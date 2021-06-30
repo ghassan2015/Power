@@ -73,7 +73,6 @@
                 <tr>
                     <th width="2%">#</th>
                     <th>رقم الوصل</th>
-                    <th>رقم الفاتورة</th>
                     <th> الدفعة</th>
                     <th>العمليات</th>
                 </tr>
@@ -141,12 +140,11 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('Payment.index') }}",
+                ajax: "{{ route('Customer.Payment.index') }}",
 
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'Name', name: 'Name'},
-                    {data: 'Invoice', name: 'Invoice'},
 
                     {data: 'Paid', name: 'Invoice'},
 
