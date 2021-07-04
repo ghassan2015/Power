@@ -11,15 +11,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
-
-//        $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
-//        $this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
-//        $this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
-//        $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
-
+        $this->middleware('auth');
     }
+//    function __construct()
+//    {
+//
+////        $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
+////        $this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
+////        $this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
+////        $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
+//
+//    }
 
     public function index(Request $request)
     {
@@ -83,7 +87,7 @@ class RoleController extends Controller
         $role = Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
-            ->pluck('role_has_permissions.permission_id')
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
         return view('Pages.Role.edit', compact('role', 'permission', 'rolePermissions'));
     }

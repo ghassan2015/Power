@@ -35,7 +35,7 @@
                             <select id="product" name="product" class="form-control">
                             </select>
                         </div>
-
+                        saw
                         <div class="col">
                             <label for="inputName" class="control-label">مبلغ التحصيل</label>
                             <input type="text" class="form-control" id="inputName" name="Amount_collection"

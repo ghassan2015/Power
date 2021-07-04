@@ -11,7 +11,9 @@ class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
+
         $user = auth('customer')->user();
+
         $counter_id = $user->Counter->id;
 
         if ($request->ajax()) {

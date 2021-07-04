@@ -14,18 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Route::get('Customers', 'Customer\CustomerController@index')->name('Customer.index');
-Route::get('/test', function () {
-    $customer = Customer::find(1);
-    return $customer->State;
-});
-Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard'], function () {
+Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard', 'middleware ' => 'auth'], function () {
     //box
-    // Route::resource('/Boxs', 'BoxController');
-    Route::get('Boxs', 'BoxController@index')->name('Boxs.index');
-    Route::post('Boxs', 'BoxController@store')->name('Boxs.store');
-    Route::get('Boxs/{id}/edit', 'BoxController@edit')->name('Boxs.edit');
-    Route::put('Boxs/update/{id}', 'BoxController@update')->name('Boxs.update');
-    Route::get('Boxs/destroy/{id}', 'BoxController@destroy')->name('Box.destroy');
+    Route::group(['prefix' => 'Boxs'], function () {
+
+        Route::get('/', 'BoxController@index')->name('Boxs.index');
+        Route::post('/', 'BoxController@store')->name('Boxs.store');
+        Route::get('/{id}/edit', 'BoxController@edit')->name('Boxs.edit');
+        Route::put('/update/{id}', 'BoxController@update')->name('Boxs.update');
+        Route::get('/destroy/{id}', 'BoxController@destroy')->name('Box.destroy');
+        Route::get('/pdf', 'BoxController@createPDF');
+    });
     //Start Counter Controller
     //Route::resource('Counters', 'CounterController');
     Route::get('Counters', 'CounterController@index')->name('Counters.index');
@@ -82,35 +81,42 @@ Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard'], function () 
     Route::post('Profile/change-password', 'ProfileController@store')->name('change.password');
     Route::get('logout', 'ProfileController@logout')->name('admin.logout');
 
-
     Route::resource('roles', 'RoleController');
-
-    Route::resource('users', 'UserController');
+//    Route::resource('', 'UserController');
+    Route::get('users', 'UserController@index')->name('users.index');
+    Route::get('users/create', 'UserController@create')->name('users.create');
+    Route::post('users', 'UserController@store')->name('users.store');
+    Route::get('users/{id}/show', 'UserController@show')->name('users.show');
+    Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit');
+    Route::put('users/update/{id}', 'UserController@update')->name('users.update');
+    Route::get('users/destroy/{id}', 'UserController@destroy')->name('users.destroy');
 
 
     //end Invoice
 });
+
+
 //Route::resource('ajaxproducts', 'ExpenseController');
-Route::group(['namespace' => 'Customer\Auth', 'prefix' => 'Customer'], function () {
+
+Route::group(['namespace' => 'Customer\Auth', 'prefix' => 'Customer', 'middleware' => 'guest:customer'], function () {
     Route::get('/login', 'LoginController@login')->name('Customer.login');
     Route::post('/login/', 'LoginController@postLogin')->name('postLogin');
 });
-Auth::routes(['register' => false]);
 
-//Route::get('/post', 'HomeController@index')->name('customers')->middleware('auth:customer');
 
-Route::get('/test', function () {
-    $customer = Customer::find(1);
-    return $customer->State;
-})->name('customers')->middleware('auth:customer');
-
-Route::group(['namespace' => 'Customer', 'prefix' => 'Customers'], function () {
+Route::group(['namespace' => 'Customer', 'prefix' => 'Customers', 'middleware ' => 'auth:customer'], function () {
     Route::get('Profile/', 'ProfileController@Profile')->name('Customer.Profile');
     Route::put('Profile/{id}/Update/', 'ProfileController@UpdateProfile')->name('Customer.Profile.update');
     Route::get('changePassword/', 'ProfileController@changePassword')->name('Customer.Profile.password');
     Route::post('Profile/change-password', 'ProfileController@store')->name('change.password');
-    Route::get('logout', 'ProfileController@logout')->name('admin.logout');
+    Route::get('logout', 'ProfileController@logout')->name('Customer.logout');
     Route::get('Invoice', 'InvoiceController@index')->name('Customer.Invoice.index');
     Route::get('Payment', 'PaymentController@index')->name('Customer.Payment.index');
+    Route::get('Payment/{id}/show', 'PaymentController@show')->name('Customer.Payment.show');
+});
+Route::get('/home', 'HomeController@index');
 
+Auth::routes(['register' => false]);
+Route::get('test', function () {
+    return view('layouts.login_user');
 });

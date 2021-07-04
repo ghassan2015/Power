@@ -19,9 +19,14 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request)
     {
+
         $options = '';
         if ($request->ajax()) {
             $data = Customer::latest()->get();

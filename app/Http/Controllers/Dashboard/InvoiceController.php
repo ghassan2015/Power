@@ -4,76 +4,90 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InvoiceRequest;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Box;
 use App\Models\Counter;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Validation\Rule;
+use Symfony\Component\Console\Input\Input;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request)
     {
 
+        $button = '';
+        //       $States = State::all();
         if ($request->ajax()) {
             $data = Invoice::latest()->get();
             return Datatables::of($data)
-                ->addColumn('Name', function (Invoice $invoice) {
-                    return $invoice->Name;
-                })
-                ->addColumn('Name_Location', function (Invoice $invoice) {
-                    return $invoice->Counter->Name;
-                })
-                ->addColumn('Location', function (Invoice $invoice) {
-                    return $invoice->Counter->Box->Name;
-                })->addColumn('action', function ($data) {
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
 
-                    $button = '<a name="edit" href="' . url("/Dashboard/Invoice/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
+                    $button = '<a name="edit" href="' . url("/Dashboard/Boxs/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
+
+
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+
         }
 
         return view('Pages.Invoice.index');
     }
 
 
-    public function create()
+    public
+    function create()
     {
-        $Counters = Counter::all();
-        $Boxes = Box::all();
-        return view('Pages.Invoice.create', compact('Counters', 'Boxes'));
+        Customer::with(['Counter'])->get();
+        $Inovices = Customer::with(['Counter'])->get();
+//        $counter = $Inovices->Counter;
+//        return $counter->Customer;
+        return view('Pages.Invoice.Add_invoice', compact('Inovices'));
 
     }
 
 
-    public function store(InvoiceRequest $request)
+    public
+    function store(Request $request)
     {
-
+        $data = $request->except('_token');
+        $Customer_ids = $data['Customer_id'];
+        $Names = $data['Name'];
+        $previous_reading = $data['previous_reading'];
+        $current_reading = $data['current_reading'];
+        $Total = $data['Total'];
         try {
-            $Invoice = new Invoice();
-            $Invoice->Name = $request->Name;
-            $Invoice->Counter_id = $request->counter_id;
-            $Invoice->Value = $request->Value;
-            $Invoice->Total = $request->Total;
-            $Invoice->Remainder = $request->Total;
-            $Invoice->save();
-            toastr()->success('تمت عملية  الاضافة بنجاح');
+            foreach ($Customer_ids as $key => $value) {
+                $Invoice = new Invoice();
+                $Invoice->Name = $Names[$key];
+                $Invoice->previous_reading = $previous_reading[$key];
+                $Invoice->current_reading = $current_reading[$key];
+                $Invoice->Total = $Total[$key];
+                $Invoice->Customer_id = $Customer_ids[$key];
+                $Invoice->save();
+            }
             return redirect()->route('Invoice.index');
         } catch (\Exception $exception) {
-            toastr()->success('هناك خطا ما يرجى المحاولة لاحقا');
-            return redirect()->route('Invoice.index');
+            return $exception;
         }
 
     }
 
 
-    public function show($id)
+    public
+    function show($id)
     {
         $Invoice = Invoice::findOrFail($id);
         return view('Pages.Invoice.show', compact('Invoice'));
@@ -82,7 +96,8 @@ class InvoiceController extends Controller
     }
 
 
-    public function edit($id)
+    public
+    function edit($id)
     {
         $Counter = Counter::all();
         $Boxes = Box::all();
@@ -95,7 +110,8 @@ class InvoiceController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         try {
             $counter = Invoice::findOrFail($id);
@@ -126,7 +142,8 @@ class InvoiceController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         try {
             $counter = Invoice::findOrFail($id)->delete();
@@ -141,7 +158,8 @@ class InvoiceController extends Controller
         }
     }
 
-    public function driven(Request $request)
+    public
+    function driven(Request $request)
     {
 
         if ($request->ajax()) {
@@ -169,7 +187,8 @@ class InvoiceController extends Controller
         return view('Pages.Invoice.driven');
     }
 
-    public function unpaid(Request $request)
+    public
+    function unpaid(Request $request)
     {
 
         if ($request->ajax()) {

@@ -14,26 +14,31 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-
         $button = '';
         $user = auth('customer')->user()->id;
         $Customer = Customer::find($user);
         $Counter_id = $Customer->Counter->id;
-        $invoice_id = Invoice::find($Counter_id);
-        $invoice_id = $invoice_id->id;
+        $invoice_id = Invoice::where('Counter_id', $Counter_id)->pluck('id', 'Name', 'Paid');
 
-
+        $data = Payment::whereIn('Invoice_id', $invoice_id)->get();
         if ($request->ajax()) {
-            $data = Payment::where('Invoice_id', $invoice_id)->get();
-            return DataTables::of($data)
+            $data = Payment::whereIn('Invoice_id', $invoice_id)->get();
+            return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('Invoice', function ($data) {
+
+                    return $data->Invoice->Name;
+
+                })
+                ->addColumn('Paid', function ($data) {
+
+                    return $data->Paid;
+
+                })
                 ->addColumn('action', function ($data) {
 
-                    $button = '<a name="edit" href="' . url("/Dashboard/Payment/$data->id/show") . '" . id="' . $data->id . '" class="edit btn btn-secondary btn-sm"><span><i class="fa fa-eye" aria-hidden="true"></i></span>عرض</a>';
+                    $button = '<a name="edit" href="' . url("/Customers/Payment/$data->id/show") . '" . id="' . $data->id . '" class="edit btn btn-secondary btn-sm"><span><i class="fa fa-eye" aria-hidden="true"></i></span>عرض</a>';
                     $button .= '&nbsp;&nbsp';
-                    $button = $button . '<a name="edit" href="' . url("/Dashboard/Payment/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
 
 
@@ -43,9 +48,17 @@ class PaymentController extends Controller
 
         }
 
+
         return view('Pages.Customers.Payment.index');
     }
 
+    public function show($id)
+    {
+        $payment = Payment::findOrFail($id);
+        return view('Pages.Customers.Payment.show', compact('payment'));
+    }
+
 }
+
 
 

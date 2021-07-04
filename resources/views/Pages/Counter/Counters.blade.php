@@ -101,57 +101,58 @@
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true" style="text-align: right">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">اضافة مستخدم جديد</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" novalidate action="{{route('Counters.store')}}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">رقم العداد</label>
-                                <input type="text" name="Name" class="form-control" id="exampleInputEmail1"
-                                       aria-describedby="emailHelp" placeholder="ادخل رقم العداد" required>
-                                <div class="invalid-feedback">
-                                    الرجاء ادخل الرقم العداد
-                                </div>
-                                <small id="emailHelp" class="form-text text-muted"></small>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="text-align: right">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة مستخدم جديد</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate action="{{route('Counters.store')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">رقم العداد</label>
+                            <input type="text" name="Name" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" placeholder="ادخل رقم العداد" required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخل الرقم العداد
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">مكان العداد</label>
-                                <input type="text" name="Location" class="form-control" id="exampleInputPassword1"
-                                       placeholder="الرجاء ادخل مكان الصندوق هنا" required>
-                                <div class="invalid-feedback">
-                                    الرجاء ادخل العنوان الخاص العداد
-                                </div>
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">مكان العداد</label>
+                            <input type="text" name="Location" class="form-control"
+                                   id="Location"
+                                   placeholder="الرجاء ادخل مكان الصندوق هنا" required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخل العنوان الخاص العداد
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1"> مكان التجميع </label>
-                                <select name="Box_id"
-                                        class="custom-select"
-                                        onclick="console.log($(this).val())">
-                                    <!--placeholder-->
-                                    @foreach ( $Boxs as  $Box)
-                                        <option
-                                            value="{{ $Box->id }}">
-                                            {{ $Box->Name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('Box_id')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-2 col-form-label">الحالة</label>
-                                <div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1"> مكان التجميع </label>
+                            <select name="Box_id"
+                                    class="custom-select"
+                                    onclick="console.log($(this).val())">
+                                <!--placeholder-->
+                                @foreach ( $Boxs as  $Box)
+                                    <option
+                                        value="{{ $Box->id }}">
+                                        {{ $Box->Name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('Box_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">الحالة</label>
+                            <div>
 															<span
                                                                 class="switch switch-outline switch-icon switch-success">
 																<label>
@@ -161,70 +162,70 @@
 																	<span></span>
 																</label>
 															</span>
-                                </div>
                             </div>
+                        </div>
 
-                            <button type="submit" class="btn btn-primary">تاكيد</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                    </div>
+                        <button type="submit" class="btn btn-primary">تاكيد</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                 </div>
             </div>
         </div>
+    </div>
+    <@stop
+@section('js')
+    <script type="text/javascript">
+        Counter_id = '';
+        $(document).on('click', '.delete', function () {
+            Counter_id = $(this).attr('id');
+            console.log($(this).attr('id'));
+            $('#confirmModal').modal('show');
+        });
 
-        <@stop
-        @section('js')
-            <script type="text/javascript">
-                Counter_id = '';
-                $(document).on('click', '.delete', function () {
-                    Counter_id = $(this).attr('id');
-                    console.log($(this).attr('id'));
-                    $('#confirmModal').modal('show');
-                });
-
-                $('#ok_button').click(function () {
-                    $.ajax({
-                        url: "/Dashboard/Counters/destroy/" + Counter_id,
-                        beforeSend: function () {
-                            $('#ok_button').text('Deleting...');
-                        }
-                        ,
-                        success: function (data) {
-                            setTimeout(function () {
-                                $('#confirmModal').modal('hide');
-                                $('.data-table').DataTable().ajax.reload();
-                            }, 2000);
-                        }
-                    })
-                });
-                $(function () {
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    var table = $('.data-table').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: "{{ route('Counters.index') }}",
-
-                        columns: [
-                            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                            {data: 'Name', name: 'Name'},
-                            {data: 'Name_Location', name: 'Name_Location'},
-                            {data: 'Location', name: 'Location'},
-
-                            {data: 'Status', name: 'Status'},
-
-                            {data: 'action', name: 'action', orderable: false, searchable: false},
-                        ]
-                    });
+        $('#ok_button').click(function () {
+            $.ajax({
+                url: "/Dashboard/Counters/destroy/" + Counter_id,
+                beforeSend: function () {
+                    $('#ok_button').text('Deleting...');
+                }
+                ,
+                success: function (data) {
+                    setTimeout(function () {
+                        $('#confirmModal').modal('hide');
+                        $('.data-table').DataTable().ajax.reload();
+                    }, 2000);
+                }
+            })
+        });
+        $(function () {
 
 
-                });
-            </script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('Counters.index') }}",
+
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'Name', name: 'Name'},
+                    {data: 'Name_Location', name: 'Name_Location'},
+                    {data: 'Location', name: 'Location'},
+
+                    {data: 'Status', name: 'Status'},
+
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+
+
+        });
+    </script>
 @endsection

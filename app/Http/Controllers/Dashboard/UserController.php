@@ -14,6 +14,11 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $options = '';
@@ -22,7 +27,7 @@ class UserController extends Controller
             return \Yajra\DataTables\DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $button = '&nbsp;&nbsp;&nbsp<a class="edit btn btn-primary btn-sm"  id="' . $data->id . '" href="' . url("/users/$data->id/edit") . '"><i class="fas fa-user-edit"></i> تعديل </a>';
+                    $button = '&nbsp;&nbsp;&nbsp<a class="edit btn btn-primary btn-sm"  id="' . $data->id . '" href="' . url("Dashboard/users/$data->id/edit") . '"><i class="fas fa-user-edit"></i> تعديل </a>';
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-user-minus"></i></span>حذف</button>';
                     return $button;
                 })

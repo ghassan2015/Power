@@ -6,7 +6,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                <h3 class="card-label">لوحة عرض الفواتير </h3>
+                <h3 class="card-label">لوحة عرض الدفعات الخاصة بالمستخدم </h3>
             </div>
             <div class="card-toolbar">
                 <!--begin::Dropdown-->

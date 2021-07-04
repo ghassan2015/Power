@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $fillable = ['Name', 'Counter_id', 'Value', 'Total', 'Remainder', 'Status'];
+    //protected $fillable = ['Name', 'Counter_id', 'current_reading', 'Total', 'previous_reading', 'Status'];
+    protected $guarded = [];
 
     public function Counter()
     {

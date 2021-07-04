@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoxRequest;
 use App\Models\Box;
+use App\Models\Counter;
 use App\Models\Customer;
 use App\Models\State;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class BoxController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request)
     {
@@ -22,10 +29,6 @@ class BoxController extends Controller
             $data = Box::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('State', function ($data) {
-                    return $data->State->Name;
-
-                })
                 ->addColumn('action', function ($data) {
 
                     $button = '<a name="edit" href="' . url("/Dashboard/Boxs/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
@@ -142,10 +145,30 @@ class BoxController extends Controller
      */
     public function destroy($id)
     {
+        $Counter = Counter::where('Box_id', $id)->get();
+        if ($Counter) {
+            toastr()->error('لم تتم عملية الحذف هذا العنصر بنجاح بسبب وجود');
 
-        $box = Box::where('id', $id)->delete();
+        } else {
+            $box = Box::where('id', $id)->delete();
+
+        }
+
 
         toastr()->success('تمت عملية التعديل بنجاح');
         return redirect()->route('Boxs.index');
+    }
+
+    public function createPDF()
+    {
+        // retreive all records from db
+        $States = State::all();
+
+        // share data to view
+        view()->share('States', $States);
+        $pdf = PDF::loadView('Pages.Boxs.index', $States)->setOptions(['defaultFont' => 'sans-serif']);;
+
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
     }
 }

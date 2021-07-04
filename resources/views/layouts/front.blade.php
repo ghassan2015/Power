@@ -7,7 +7,20 @@
     <title>Metronic Live preview | Keenthemes</title>
     @yield('Style')
     @toastr_css
-
+    @font-face {
+    font-family: 'Dolce-Vita';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/public/fonts/Dolce-Vita.ttf');
+    }
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200&display=swap" rel="stylesheet">
     <title>Header Dark </title>
     <meta name="description" content="Header dark theme example"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -96,237 +109,315 @@
                      data-menu-dropdown-timeout="500">
                     <!--begin::Menu Nav-->
                     <ul class="menu-nav">
-                        <li class="menu-item menu-item-active" aria-haspopup="true">
-                            <a href="index.html" class="menu-link">
-                                <i class="menu-icon flaticon2-architecture-and-city"></i>
-                                <span class="menu-text">الرئيسية</span>
-                            </a>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">الصندوق</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                        @auth()
+                            @can('الرئيسية')
+                                <li class="menu-item menu-item-active" aria-haspopup="true">
+                                    <a href="index.html" class="menu-link">
+                                        <i class="menu-icon flaticon2-architecture-and-city"></i>
+                                        <span class="menu-text">الرئيسية</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('الصندوق')
+
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">الصندوق</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text">الصندوق </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Boxs.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الصندوق</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Boxs.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الصندوق</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('العداد')
 
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-browser-2"></i>
-                                <span class="menu-text">العدادات</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-browser-2"></i>
+                                        <span class="menu-text">العدادات</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text">العدادات</span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Counters.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">العدادات</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Counters.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">العدادات</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
+                                        </ul>
+                                    </div>
+                                </li>
 
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">الفواتير</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                            @endcan
+
+
+                            @can('الفواتير')
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">الفواتير</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text">الفواتير </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Invoice.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الفواتير</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Invoice.driven')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> فواتير المدفوعة</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Invoice.unpaid')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الفواتير غير مدفوعة</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">الدفعات </span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Invoice.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الفواتير</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Invoice.driven')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> فواتير المدفوعة</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Invoice.unpaid')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الفواتير غير مدفوعة</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('الدفعات')
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">الدفعات </span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text">الدفعات </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Payment.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الدفعات</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Payment.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الدفعات</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">المصاريف التشغيلية</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('المصاريف التشغيلية')
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">المصاريف التشغيلية</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text">المصاريف التشغيلية </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('Expense.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> المصاريف التشغيلية</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Expense.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> المصاريف التشغيلية</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">الصلاحيات </span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('الصلاحيات')
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">الصلاحيات </span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text"> الصلاحيات </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('roles.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الصلاحيات</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('roles.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الصلاحيات</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">الموظفين </span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('الموظفين')
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">الموظفين </span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text"> الموظفين </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('users.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> الموظفين</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('users.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> الموظفين</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-icon flaticon2-laptop"></i>
-                                <span class="menu-text">المشتركين </span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                            @can('المشتركين')
+
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="menu-icon flaticon2-laptop"></i>
+                                        <span class="menu-text">المشتركين </span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
 												<span class="menu-link">
 													<span class="menu-text"> المشتركين </span>
 												</span>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{route('users.index')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text"> المشتركين</span>
-                                        </a>
-                                    </li>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Customers.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> المشتركين</span>
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
+                        @endauth
+                        @auth('customer')
+                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="menu-icon flaticon2-laptop"></i>
+                                    <span class="menu-text">الفواتير </span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+												<span class="menu-link">
+													<span class="menu-text"> الفواتير </span>
+												</span>
+                                        </li>
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('Customer.Invoice.index')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text"> الفواتير</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="menu-icon flaticon2-laptop"></i>
+                                    <span class="menu-text">الدفعات </span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+												<span class="menu-link">
+													<span class="menu-text"> الدفعات </span>
+												</span>
+                                        </li>
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('Customer.Payment.index')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text"> الدفعات</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        @endauth
 
                     </ul>
                     <!--end::Menu Nav-->
@@ -1310,18 +1401,19 @@
                         <div class="topbar-item">
                             <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                  id="kt_quick_user_toggle">
-                                <span
-                                    class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
                                 @if(auth()->id()))
                                 <span
                                     class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{auth()->user()->name}}</span>
                                 <span class="symbol symbol-35 symbol-light-success">
 											<span class="symbol-label font-size-h5 font-weight-bold">S</span>
 										</span>
-                                @else
-                                    <span
-                                        class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{auth('customer')->user()->Name}}</span>
-                                    <span class="symbol symbol-35 symbol-light-success">
+                                @endif
+                                @if(auth('customer')->id()))
+                                <span
+                                    class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                                <span
+                                    class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{auth('customer')->user()->Name}}</span>
+                                <span class="symbol symbol-35 symbol-light-success">
 											<span class="symbol-label font-size-h5 font-weight-bold">S</span>
 										</span>
                                 @endif
@@ -1540,7 +1632,9 @@
                 @if(auth()->user())
                     <a href="#"
                        class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth()->user()->name}}</a>
-                @else
+                @endif
+                @if(auth('customer')->user())
+
                     <a href="#"
                        class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth('customer')->user()->name}}</a>
                 @endif
@@ -1567,7 +1661,9 @@
                                          @if(auth()->user())
                                         <span
                                             class="navi-text text-muted text-hover-primary">{{auth()->user()->email}}</span>
-                                    @else
+                                    @endif
+                                    @if(auth('customer')->user())
+
                                         <a href="#"
                                            class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth('customer')->user()->email}}</a>
                                     @endif
@@ -1575,10 +1671,17 @@
 								</span>
                     </a>
 
+                    @if(auth()->id())
+                        <a href="{{route('admin.logout')}}"
+                           class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"><i class="ft-power"></i>تسجيل
+                            خروج</a>
+                    @endif
+                    @if(auth('customer')->user())
 
-                    <a href="{{route('admin.logout')}}"
-                       class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"><i class="ft-power"></i>تسجيل
-                        خروج</a>
+                        <a href="{{route('Customer.logout')}}"
+                           class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"><i class="ft-power"></i>تسجيل
+                            خروج</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -1618,7 +1721,9 @@
                         </div>
                     </div>
                 </a>
-            @else
+            @endif
+            @if(auth('customer')->user())
+
                 <a href="{{route('Customer.Profile')}}" class="navi-item">
                     <div class="navi-link">
                         <div class="symbol symbol-40 bg-light mr-3">
@@ -1653,7 +1758,9 @@
             <!--begin::Item-->
             @if(auth()->id())
                 <a href="{{route('User.Profile.password')}}" class="navi-item">
-                    @else
+                    @endauth
+                    @if(auth('customer')->user())
+
                         <a href="{{route('Customer.Profile.password')}}" class="navi-item">
 
                             @endif
@@ -3465,6 +3572,26 @@
 @toastr_js
 @toastr_render
 @yield('js')
+<script>
+    $(document).ready(function () {
+        $('data-table').DataTable({
+            dom: "Blfrtip",
+            columnDefs: [{
+                orderable: false,
+                targets: -1
+            }]
+        });
+
+        $('#Box_id').select2({
+            placeholder: "اختر القيمة"
+        });
+        $('.kt_select2_2').select2({
+            placeholder: "اختر القيمة"
+        });
+
+    });
+
+</script>
 </body>
 <!--end::Body-->
 </html>

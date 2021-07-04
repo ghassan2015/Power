@@ -175,10 +175,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Yoeunes\Toastr\ToastrServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
 
+        Yoeunes\Toastr\ToastrServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -234,6 +237,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

@@ -17,6 +17,11 @@ class Counter extends Model
         return $this->belongsTo(Box::class, 'Box_id');
     }
 
+    public function Customer()
+    {
+        return $this->hasOne(Customer::class, 'Counter_id');
+    }
+
     public function Invoice()
     {
         return $this->hasMany(Invoice::class, 'Counter_id');

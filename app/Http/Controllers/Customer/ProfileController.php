@@ -77,12 +77,12 @@ class ProfileController extends Controller
         $gaurd = $this->getGaurd();
         $gaurd->logout();
 
-        return redirect()->route('login');
+        return redirect()->route('Customer.login');
     }
 
     private function getGaurd()
     {
-        return auth()->guard();
+        return auth()->guard('customer');
     }
 
 

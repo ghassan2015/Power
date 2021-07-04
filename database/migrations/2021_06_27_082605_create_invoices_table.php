@@ -16,10 +16,10 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('Name');
-            $table->foreignId('Counter_id')->references('id')->on('counters')->onDelete('cascade');
-            $table->string('Value');
+            $table->foreignId('Customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->integer('current_reading');
+            $table->integer('previous_reading')->default(0);
             $table->string('Total');
-            $table->string('Remainder');
             $table->tinyInteger('Status')->default(0);
             $table->timestamps();
         });

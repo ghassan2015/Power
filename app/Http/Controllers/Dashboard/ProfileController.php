@@ -11,6 +11,11 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function Profile()
     {
         $user_id = auth()->id();

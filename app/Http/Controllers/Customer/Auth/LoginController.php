@@ -29,14 +29,14 @@ class LoginController extends Controller
     }
 
 
-    public function postLogin(Request $request)
+    public function postLogin(CustomersLoginRequest $request)
     {
 //        return $request;
 
         if (auth('customer')->attempt(['email' => $request->input("email"), 'password' => $request->input("password")])) {
-            return redirect()->route('customers');
+            return redirect()->route('Customer.Invoice.index');
         }
-        dd('ss');
+
         return view('Customer.auth.login');
 
     }

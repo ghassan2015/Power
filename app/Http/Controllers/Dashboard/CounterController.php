@@ -12,6 +12,11 @@ use Illuminate\Validation\Rule;
 
 class CounterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
 

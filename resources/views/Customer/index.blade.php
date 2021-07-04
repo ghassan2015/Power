@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('Style')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -11,27 +11,29 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
+
                         <div class="card-title">
                             اضافة مستخدم جديد
-                            <button style="float: right; font-weight: 900;" class="btn btn-info btn-sm" type="button"  data-toggle="modal" data-target="#CreateArticleModal">
+                            <button style="float: right; font-weight: 900;" class="btn btn-info btn-sm" type="button"
+                                    data-toggle="modal" data-target="#CreateArticleModal">
                                 اضافة مستخدم جديد
                             </button>
                         </div>
-    <div class="container">
-    <table class="table table-bordered data-table" style="text-align: right">
-        <thead>
-        <tr>
-            <th width="5%">No</th>
-            <th width="20%">الاسم</th>
-            <th width="20%">الايميل</th>
+                        <div class="container">
+                            <table class="table table-bordered data-table" style="text-align: right">
+                                <thead>
+                                <tr>
+                                    <th width="5%">الرقم</th>
+                                    <th width="20%">الاسم</th>
+                                    <th width="20%">الايميل</th>
 
-            <th width="20%">العمليات</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+                                    <th width="20%">العمليات</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>

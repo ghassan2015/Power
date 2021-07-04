@@ -63,6 +63,8 @@
                         </div>
                         <!--end::Dropdown Menu-->
                     </div>
+                    <a class="btn btn-primary" href="{{ URL::to('Dashboard/Boxs/pdf') }}">Export to PDF</a>
+
                     <!--end::Dropdown-->
                     <!--begin::Button-->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -123,7 +125,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">مكان العداد</label>
                                 <select name="State_id"
-                                        class="custom-select"
+                                        class="custom-select kt_select2_2"
                                         onclick="console.log($(this).val())">
                                     <!--placeholder-->
                                     @foreach ( $States as  $State)
@@ -166,73 +168,74 @@
             </div>
         </div>
 
+    </div>
 
-        <@stop
-        @section('js')
-            <script type="text/javascript">
-                Counter_id = '';
-                $(document).on('click', '.delete', function () {
-                    Counter_id = $(this).attr('id');
-                    console.log($(this).attr('id'));
-                    $('#confirmModal').modal('show');
-                });
+    <@stop
+@section('js')
+    <script type="text/javascript">
+        Counter_id = '';
+        $(document).on('click', '.delete', function () {
+            Counter_id = $(this).attr('id');
+            console.log($(this).attr('id'));
+            $('#confirmModal').modal('show');
+        });
 
-                $('#ok_button').click(function () {
-                    $.ajax({
-                        url: "/Dashboard/Boxs/destroy/" + Counter_id,
-                        beforeSend: function () {
-                            $('#ok_button').text('Deleting...');
+        $('#ok_button').click(function () {
+            $.ajax({
+                url: "/Dashboard/Boxs/destroy/" + Counter_id,
+                beforeSend: function () {
+                    $('#ok_button').text('Deleting...');
+                }
+                ,
+                success: function (data) {
+                    setTimeout(function () {
+                        $('#confirmModal').modal('hide');
+                        $('.data-table').DataTable().ajax.reload();
+                    }, 2000);
+                }
+            })
+        });
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('Boxs.index') }}",
+
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'Name', name: 'Name'},
+                    {data: 'Location', name: 'Location'},
+                    {data: 'State', name: 'State'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+
+                ]
+            });
+
+
+        });
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
                         }
-                        ,
-                        success: function (data) {
-                            setTimeout(function () {
-                                $('#confirmModal').modal('hide');
-                                $('.data-table').DataTable().ajax.reload();
-                            }, 2000);
-                        }
-                    })
-                });
-                $(function () {
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    var table = $('.data-table').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: "{{ route('Boxs.index') }}",
-
-                        columns: [
-                            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                            {data: 'Name', name: 'Name'},
-                            {data: 'Location', name: 'Location'},
-                            {data: 'State', name: 'State'},
-                            {data: 'action', name: 'action', orderable: false, searchable: false},
-
-                        ]
-                    });
-
-
-                });
-                (function () {
-                    'use strict';
-                    window.addEventListener('load', function () {
-                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                        var forms = document.getElementsByClassName('needs-validation');
-                        // Loop over them and prevent submission
-                        var validation = Array.prototype.filter.call(forms, function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (form.checkValidity() === false) {
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                }
-                                form.classList.add('was-validated');
-                            }, false);
-                        });
+                        form.classList.add('was-validated');
                     }, false);
-                })();
-            </script>
+                });
+            }, false);
+        })();
+    </script>
 @endsection

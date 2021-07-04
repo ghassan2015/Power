@@ -11,7 +11,7 @@ $factory->define(\App\Models\Customer::class, function (Faker $faker) {
         'Email' => $faker->unique()->safeEmail,
         'Password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'Phone' => $faker->phoneNumber,
-        'Price' => $faker->randomNumber(3, 4),
+        'Price' => $faker->numberBetween(3, 4),
         'Address' => $faker->address,
         'State_id' => $faker->numberBetween(1, 4),
         'Counter_id' => $faker->numberBetween(1, 50),

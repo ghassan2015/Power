@@ -80,24 +80,10 @@
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group row">
-                    @foreach($permission as $permission)
-                        <label class="col-2 col-form-label">{{$permission->name}}</label>
-                        <div>
-                                            <span class="switch switch-outline switch-icon switch-success">
-                                                <label>
-                                                    @foreach($rolePermissions as $role)
-                                                        <input type="checkbox"
-                                                               name="permission[]" value="{{$permission->id}}"
-
-                                                               @if($permission->id==$role)
-                                                               checked
-                                                        @endif
-                                                    />
-                                                    @endforeach
-                                                    <span></span>
-                                                </label>
-                                            </span>
-                        </div>
+                    @foreach($permission as $value)
+                        <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
+                            {{ $value->name }}</label>
+                        <br/>
                     @endforeach
 
                 </div>
