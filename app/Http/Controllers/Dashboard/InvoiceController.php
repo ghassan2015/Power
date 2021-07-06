@@ -10,6 +10,7 @@ use App\Models\Box;
 use App\Models\Counter;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Input\Input;
 
@@ -30,8 +31,11 @@ class InvoiceController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
+                    $button = '<a name="edit" href="' . url("/Dashboard/Invoice/$data->id/show") . '" . id="' . $data->id . '" class="edit btn btn-dark btn-sm"><span> <i class="fa fa-eye" aria-hidden="true"></i>عرض</span></a>';
 
-                    $button = '<a name="edit" href="' . url("/Dashboard/Boxs/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
+                    $button .= '&nbsp;&nbsp;';
+
+                    $button = $button . '<a name="edit" href="' . url("/Dashboard/Invoice/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
@@ -60,8 +64,9 @@ class InvoiceController extends Controller
 
 
     public
-    function store(Request $request)
+    function store(InvoiceRequest $request)
     {
+
         $data = $request->except('_token');
         $Customer_ids = $data['Customer_id'];
         $Names = $data['Name'];
@@ -86,11 +91,14 @@ class InvoiceController extends Controller
     }
 
 
-    public
-    function show($id)
+    public function show($id)
     {
-        $Invoice = Invoice::findOrFail($id);
-        return view('Pages.Invoice.show', compact('Invoice'));
+        $inovice = Invoice::with('Customer')->findOrFail($id);
+        if (!$inovice) {
+            toastr()->error('هذا الصندوق غير موجود حاول مرة اخرى');
+            return redirect()->route('Invoice.index');
+        }
+        return view('Pages.Invoice.show', compact('inovice'));
 
         //
     }
@@ -99,33 +107,30 @@ class InvoiceController extends Controller
     public
     function edit($id)
     {
-        $Counter = Counter::all();
-        $Boxes = Box::all();
-        $Invoices = Invoice::findOrFail($id);
-        if (!$Invoices) {
+        $inovice = Invoice::with('Customer')->findOrFail($id);
+        if (!$inovice) {
             toastr()->error('هذا الصندوق غير موجود حاول مرة اخرى');
             return redirect()->route('Invoice.index');
         }
-        return view('Pages.Invoice.edit', compact('Invoices', 'Counter', 'Boxes'));
+        return view('Pages.Invoice.edit_invoice', compact('inovice'));
     }
 
 
-    public
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            "current_reading" => "required",
+            "Customer_id" => "required",
+            "previous_reading" => "required",
+            "Total" => "required",
+        ]);
         try {
-            $counter = Invoice::findOrFail($id);
-            $request->validate([
-                'Total' => 'required',
-                'counter_id' => 'required',
-                'Value' => 'required',
-                'counter_id' => 'required',
-                'Name' => ['required', Rule::unique('invoices')->ignore($counter->id),],
-            ]);
+
             $Invoice = Invoice::findOrFail($id);
+            $Invoice->Customer_id = $request->Customer_id;
             $Invoice->Name = $request->Name;
-            $Invoice->Counter_id = $request->counter_id;
-            $Invoice->Value = $request->Value;
+            $Invoice->previous_reading = $request->previous_reading;
+            $Invoice->current_reading = $request->current_reading;
             $Invoice->Total = $request->Total;
             $Invoice->save();
             toastr()->success('تمت عملية  التعديل بنجاح');

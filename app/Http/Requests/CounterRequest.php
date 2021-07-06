@@ -27,7 +27,6 @@ class CounterRequest extends FormRequest
         return [
             'Name' => ['required', Rule::unique('counters')->ignore($this->id),],
             'Box_id' => 'required',
-            'Total' => 'required',
 
         ];
     }

@@ -4,11 +4,12 @@
         <div class="card">
             <div class="card-header">
                 <div style="float: right;">
-                    <h4>اضافة دفعة جديدة</h4>
+                    <h4>اضافة موظف جديدة</h4>
                 </div>
                 <div style="float: left;">
                     <a href="{{route('users.index')}}" type="button" class="btn btn-primary">
                         الرجوع للقائمة السابقة
+                        <i class="fas fa-backward"></i>
                     </a>
                 </div>
 
@@ -81,21 +82,19 @@
                         </div>
                         <!-- end: Example Code-->
                     </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-primary mr-2">Save</button>
-                                <button type="reset" class="btn btn-secondary">Cancel</button>
-                            </div>
-                        </div>
+                    <div class="card-footer" style="text-align: left">
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+
                     </div>
                 </form>
                 <!--end::Form-->
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
 
 
 @endsection

@@ -1,58 +1,75 @@
 @extends('layouts.front')
 @section('Content')
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <div style="float: right;">
-                    <h4>عرض محتويات الدفعة </h4>
-                </div>
-                <div style="float: left;">
-                    <a href="{{route('Payment.index')}}" type="button" class="btn btn-primary">
-                        الرجوع للقائمة السابقة
-                    </a>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card card-custom">
+                    <div class="card-header">
+                        <div class="card-title">
+                    <span class="card-icon">
+                        <i class="flaticon2-heart-rate-monitor text-primary"></i>
+                    </span>
+                            <h3 class="card-label">لوحة تعديل المصروفات التشغيلية </h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <!--begin::Dropdown-->
+                            <div class="dropdown dropdown-inline mr-2">
 
+                                <!--begin::Dropdown Menu-->
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                </div>
+                                <!--end::Dropdown Menu-->
+                            </div>
+                            <!--end::Dropdown-->
+                            <!--begin::Button-->
+                            <a type="button" class="btn btn-primary" href="{{route('Expense.index')}}"><i
+                                    class="la la-backward"></i>الرجوع للقائمة السابقة
+                            </a>
+
+                            <!--end::Button-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label>رقم الدفعة :</label>
+                                <input type="text" name="Name" class="form-control"
+                                       value="{{$payment->Name}}" disabled/>
+
+                            </div>
+                            <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label> المبلغ المدفوع </label>
+                                <input type="text" class="form-control"
+                                       placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
+                                       value="{{$payment->Paid}}" disabled/>
+                            </div>
+                        </div>
+                        <div class="form-group row mg-b-20">
+                            <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label>اسم الفاتورة <span class="tx-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                       placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
+                                       value="{{$payment->Invoice->Name}}" disabled/>
+                            </div>
+                            <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label> المحصل<span class="tx-danger">*</span></label>
+
+                                <input type="text" class="form-control"
+                                       placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
+                                       value="{{$payment->User->name}}" disabled/>
+                                @error("Invoice_Value")
+                                <span class="text-danger"> </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--end::Form-->
+                </div>
             </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-lg-6">
-                        <label>رقم الدفعة :</label>
-                        <input type="text" name="Name" class="form-control"
-                               value="{{$payment->Name}}" disabled/>
-
-                    </div>
-                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                        <label> المبلغ المدفوع </label>
-                        <input type="text" class="form-control"
-                               placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
-                               value="{{$payment->Paid}}" disabled/>
-                    </div>
-                </div>
-                <div class="form-group row mg-b-20">
-                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                        <label>اسم الفاتورة <span class="tx-danger">*</span></label>
-                        <input type="text" class="form-control"
-                               placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
-                               value="{{$payment->Invoice->Name}}" disabled/>
-                    </div>
-                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                        <label> المحصل<span class="tx-danger">*</span></label>
-
-                        <input type="text" class="form-control"
-                               placeholder="ادخل قيمة الفاتورة" id="Paid" name="Paid"
-                               value="{{$payment->User->name}}" disabled/>
-                        @error("Invoice_Value")
-                        <span class="text-danger"> </span>
-                        @enderror
-                    </div>
-                </div>
-
-            </div>
-
-            <!--end::Form-->
         </div>
     </div>
-
 
 @endsection
 

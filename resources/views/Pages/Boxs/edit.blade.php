@@ -84,8 +84,13 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="card-footer" style="text-align: left">
+                                <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                                       aria-hidden="true"></i></span>تاكيد
+                                </button>
 
-                            <button type="submit" class="btn btn-primary">تاكيد</button>
+
+                            </div>
                         </form>
                     </div>
                 </div>

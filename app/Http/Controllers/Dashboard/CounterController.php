@@ -59,16 +59,23 @@ class CounterController extends Controller
 
     public function store(CounterRequest $request)
     {
-
-        if (!$request->has('active'))
-            $request->request->add(['active' => 0]);
-        else
-            $request->request->add(['active' => 1]);
-
-
-        $category = Counter::create($request->except('_token'));
-        toastr()->success('تمت عملية  الاضافة بنجاح');
-        return redirect()->route('Counters.index');
+        try {
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
+            $Counter = new Counter();
+            $Counter->Name = $request->Name;
+            $Counter->Box_id = $request->Box_id;
+            $Counter->active = $request->active;
+//            Counter::create($request->except('_token'));
+            $Counter->save();
+            toastr()->success('تمت عملية  الاضافة بنجاح');
+            return redirect()->route('Counters.index');
+        } catch (\Exception $exception) {
+            toastr()->error('لم تتم عملية  الاضافة بنجاح');
+            return redirect()->route('Counters.index');
+        }
 
 
     }

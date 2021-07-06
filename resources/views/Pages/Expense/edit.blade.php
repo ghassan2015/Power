@@ -22,7 +22,7 @@
                             </div>
                             <!--end::Dropdown-->
                             <!--begin::Button-->
-                            <a type="button" class="btn btn-primary" href="{{route('Counters.index')}}"><i
+                            <a type="button" class="btn btn-primary" href="{{route('Expense.index')}}"><i
                                     class="la la-backward"></i>الرجوع للقائمة السابقة
                             </a>
 
@@ -58,12 +58,12 @@
 
                                 <!-- end: Example Code-->
                             </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <button type="submit" class="btn btn-primary mr-2">تاكيد</button>
-                                    </div>
-                                </div>
+                            <div class="card-footer" style="text-align: left">
+                                <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                                       aria-hidden="true"></i></span>تاكيد
+                                </button>
+
+
                             </div>
                         </form>
                         <!--end::Form-->

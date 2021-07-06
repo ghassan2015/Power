@@ -51,6 +51,8 @@ Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard', 'middleware '
     Route::get('Invoice/create', 'InvoiceController@create')->name('Invoice.create');
     Route::post('Invoice', 'InvoiceController@store')->name('Invoice.store');
     Route::get('Invoice/{id}/edit', 'InvoiceController@edit')->name('Invoice.edit');
+    Route::get('Invoice/{id}/show', 'InvoiceController@show')->name('Invoice.show');
+
     Route::put('Invoice/update/{id}', 'InvoiceController@update')->name('Invoice.update');
     Route::get('Invoice/destroy/{id}', 'InvoiceController@destroy')->name('Invoice.destroy');
     Route::get('Invoice/Driven', 'InvoiceController@driven')->name('Invoice.driven');
@@ -118,5 +120,5 @@ Route::get('/home', 'HomeController@index');
 
 Auth::routes(['register' => false]);
 Route::get('test', function () {
-    return view('layouts.login_user');
+    return view('welcome');
 });

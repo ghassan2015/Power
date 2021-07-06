@@ -68,76 +68,76 @@
                 <!--end::Button-->
             </div>
         </div>
+
         <div class="card-body">
-            <!--begin::Form-->
-            <form class="form" action="{{route('Invoice.store')}}" method="post">
-                @csrf
-                <div class="card-body" data-repeater-list="List_Invoice">
-                    @foreach($Inovices as $inovice)
-                        <div class="form-group row">
 
-                            <input value="{{$inovice->Counter->Customer->id}}" type="hidden"
-                                   name="Customer_id[]">
-                            <div class="col-lg-4">
-                                <label>اسم الشخص :</label>
-                                <input type="text" name="Name[]" class="form-control"
-                                       value="{{$inovice->Counter->Customer->Name}}"
+            <div class="container">
+                <div class="card-body" style="text-align:right ">
+
+                    <!--begin::Form-->
+                    <form class="form" action="{{route('Invoice.update',$inovice->id)}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="card-body" data-repeater-list="List_Invoice">
+                            <div class="form-group row">
+
+                                <input value="{{$inovice->Customer->id}}" type="hidden"
+                                       name="Customer_id">
+                                <div class="col-lg-4">
+                                    <label>اسم الشخص :</label>
+                                    <input type="text" name="Name" class="form-control"
+                                           value="{{$inovice->Customer->Name}}"
+                                           placeholder="ادخل رقم الفاتورة"/>
+                                    @error("Name")
+                                    <span class="text-danger"> {{ $message }}</span>
+                                    @enderror
+                                </div>
 
 
-                                       placeholder="ادخل رقم الفاتورة"/>
-                                @error("Name.*")
-                                <span class="text-danger"> {{ $message }}</span>
-                                @enderror
+                                <input type="hidden" name="Price" class="form-control Price"
+                                       value="{{$inovice->Customer->Price}}"
+                                       id="Price">
+                                <input type="hidden" name="previous_reading"
+                                       class="form-control previous_reading"
+
+                                       value="{{is_null($inovice->previous_reading)?0:$inovice->previous_reading}}"
+
+                                       id="previous_reading">
+                                <div class="col-lg-4 ">
+                                    <label>قيمة العدادالحالية :</label>
+                                    <input type="text" class="form-control current"
+                                           placeholder="ادخل قيمة الفاتورة" id="current_reading"
+                                           value="{{$inovice->current_reading}}"
+                                           name="current_reading"/>
+                                    @error("current_reading")
+                                    <span class="text-danger"> {{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>قيمة الفاتورة :</label>
+                                    <input type="text" class="form-control Total"
+                                           value="{{$inovice->Total}}"
+                                           placeholder="ادخل قيمة الفاتورة" id="Total" name="Total"/>
+                                    @error("Total")
+                                    <span class="text-danger"> {{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-
-
-                            <input type="hidden" name="Price[]" class="form-control Price"
-                                   value="{{$inovice->Counter->Customer->Price}}"
-                                   id="Price">
-                            <input type="hidden" name="previous_reading[]"
-                                   class="form-control previous_reading"
-
-                                   value="{{is_null($inovice->previous_reading)?0:$inovice->previous_reading}}"
-
-                                   id="previous_reading">
-                            <div class="col-lg-4 ">
-                                <label>قيمة العدادالحالية :</label>
-                                <input type="text"
-                                       class="form-control current @error('current_reading') is-invalid @enderror"
-                                       placeholder="ادخل قيمة الفاتورة" id="current_reading"
-
-                                       name="current_reading[]"/>
-                                @error("current_reading.*")
-                                <span class="text-danger"> {{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-4">
-                                <label>قيمة الفاتورة :</label>
-                                <input type="text" class="form-control Total"
-                                       placeholder="ادخل قيمة الفاتورة" id="Total" name="Total[]"/>
-                                @error("Total.*")
-                                <span class="text-danger"> {{ $message }}</span>
-                                @enderror
-                            </div>
+                            <!-- end: Example Code-->
                         </div>
-                @endforeach
-                <!-- end: Example Code-->
+                        <div class="card-footer" style="text-align: left">
+                            <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                                   aria-hidden="true"></i></span>تاكيد
+                            </button>
+
+
+                        </div>
+                    </form>
+                    <!--end::Form-->
                 </div>
-                <div class="card-footer" style="text-align: left">
-                    <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
-                                                                           aria-hidden="true"></i></span>تاكيد
-                    </button>
-
-
-                </div>
-
-            </form>
-            <!--end::Form-->
+            </div>
         </div>
     </div>
-
-
-
 @endsection
 @section('js')
     <script>

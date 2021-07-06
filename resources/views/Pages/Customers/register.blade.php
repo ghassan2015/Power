@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                    <div class="form-control col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
                                         <label>كلمة المرور: <span class="tx-danger">*</span></label>
                                         <input class="form-control form-control-sm mg-b-20"
                                                data-parsley-class-handler="#lnWrapper"
@@ -62,81 +62,88 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>العنوان:<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20"
-                                               data-parsley-class-handler="#lnWrapper"
-                                               name="Address" required type="text">
-                                        @error("Address")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>المحافظة <span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="State_id">
-                                            @foreach ($States as $states)
-                                                <option value="{{ $states->id }}">{{ $states->Name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error("State_id")
-                                    <span class="text-danger">{{ $message }} </span>
+                                <div class="form-control col-md-6 mg-t-20 mg-md-t-0">
+                                    <label>العنوان:<span class="tx-danger">*</span></label>
+                                    <input class="form-control form-control-sm mg-b-20"
+                                           data-parsley-class-handler="#lnWrapper"
+                                           name="Address" required type="text">
+                                    @error("Address")
+                                    <span class="text-danger"> {{ $message }}</span>
                                     @enderror
-                                </div>
 
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>سعر الكليو الواحد:<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20" type="number" required
-                                               name="Price" min="0"
-                                               value="0" step="any">
-                                        @error("Price")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label> رقم الجوال<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20" type="number" required
-                                               name="Phone">
-                                        @error("Phone")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>رقم الصندوق <span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="Box_id"
-                                                onchange="console.log($(this).val())">
+
+                                    <div class="form-control col-md-6 mg-t-20 mg-md-t-0">
+
+                                        <select name="State_id" class="form-group row kt_select2_2"
+                                                style="width: 30%"
+                                                onclick="console.log($(this).val())">
                                             <!--placeholder-->
-                                            <option value="" selected
-                                                    disabled> رقم الصندوق
-                                            </option>
-                                            @foreach ($Boxes as $Box)
-                                                <option value="{{ $Box->id }}"> {{ $Box->Name }}
+                                            {{--                                    <option style="float: right">--}}
+                                            {{--                                        الرجاء ادخل المحافظة--}}
+                                            {{--                                    </option>--}}
+                                            @foreach ( $States as  $State)
+                                                <option
+                                                    value="{{ $State->id }}">
+                                                    {{ $State->Name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error("Box_id")
-                                        <span class="text-danger">{{ $message }} </span>
+                                        @error('State_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>العداد:<span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="Counter_id">
 
-                                        </select>
-                                        @error("Counter_id")
-                                        <span class="text-danger"> </span>
-                                        @enderror
+                                    <div class="form-group row mg-b-20">
+                                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                            <label>سعر الكليو الواحد:<span class="tx-danger">*</span></label>
+                                            <input class="form-control form-control-sm mg-b-20" type="number" required
+                                                   name="Price" min="0"
+                                                   value="0" step="any">
+                                            @error("Price")
+                                            <span class="text-danger"> {{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                            <label> رقم الجوال<span class="tx-danger">*</span></label>
+                                            <input class="form-control form-control-sm mg-b-20" type="number" required
+                                                   name="Phone">
+                                            @error("Phone")
+                                            <span class="text-danger"> {{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="form-group row mg-b-20">
+                                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                            <label>رقم الصندوق <span class="tx-danger">*</span></label>
+                                            <select class="form-control form-control-sm mg-b-20" name="Box_id"
+                                                    onchange="console.log($(this).val())">
+                                                <!--placeholder-->
+                                                <option value="" selected
+                                                        disabled> رقم الصندوق
+                                                </option>
+                                                @foreach ($Boxes as $Box)
+                                                    <option value="{{ $Box->id }}"> {{ $Box->Name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error("Box_id")
+                                            <span class="text-danger">{{ $message }} </span>
+                                            @enderror
+                                        </div>
+                                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                            <label>العداد:<span class="tx-danger">*</span></label>
+                                            <select class="form-control form-control-sm mg-b-20" name="Counter_id">
 
-                                <div class="form-group row">
-                                    <label class="col-1 col-form-label">الحالة</label>
-                                    <div>
+                                            </select>
+                                            @error("Counter_id")
+                                            <span class="text-danger"> </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">الحالة</label>
+                                        <div>
 															<span
                                                                 class="switch switch-outline switch-icon switch-success">
 																<label>
@@ -146,13 +153,13 @@
 																	<span></span>
 																</label>
 															</span>
+                                        </div>
                                     </div>
+
+
                                 </div>
 
-
-                            </div>
-
-                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
 
                         </form>
                         <!--end::Form-->

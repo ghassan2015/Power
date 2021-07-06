@@ -25,11 +25,14 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'Name' => ['required', Rule::unique('invoices')->ignore($this->id),],
-            'counter_id' => 'required',
-            'Value' => 'required',
-            'Box_id' => 'required',
-            'counter_id' => 'required',
+            "current_reading" => "required|array|min:3",
+            "current_reading.*" => "required|string|distinct|min:3",
+            "Customer_id" => "required|array|min:3",
+            "Customer_id.*" => "required|string|distinct|min:3",
+            "previous_reading" => "required|array|min:3",
+            "previous_reading.*" => "required|string|distinct|min:3",
+            "Total" => "required|array|min:3",
+            "Total.*" => "required|string|distinct|min:3",
         ];
     }
 }

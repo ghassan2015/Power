@@ -33,7 +33,7 @@ class CustomerController extends Controller
             return \Yajra\DataTables\DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $button = '&nbsp;&nbsp;&nbsp<a class="edit btn btn-primary btn-sm"  id="' . $data->id . '" href="' . url("/users/$data->id/edit") . '"><i class="fas fa-user-edit"></i> تعديل </a>';
+                    $button = '&nbsp;&nbsp;&nbsp<a class="edit btn btn-primary btn-sm"  id="' . $data->id . '" href="' . url("Dashboard/Customer/$data->id/edit") . '"><i class="fas fa-user-edit"></i> تعديل </a>';
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-user-minus"></i></span>حذف</button>';
                     return $button;
                 })
@@ -54,23 +54,22 @@ class CustomerController extends Controller
         return view('Customer.auth.register', compact('States', 'Boxes', 'Counters'));
     }
 
-    protected function create(Request $request)
+    protected function create(CustomerRequest $request)
     {
         try {
             $Customer = new Customer();
             $Customer->Name = $request->Name;
-            $Customer->Password = Hash::make($request->password);
-            $Customer->Email = $request->Email;
+            $Customer->password = Hash::make($request->password);
+            $Customer->email = $request->Email;
             $Customer->Phone = $request->Phone;
             $Customer->Price = $request->Price;
             $Customer->State_id = $request->State_id;
             $Customer->Address = $request->Address;
             $Customer->Box_id = $request->Box_id;
             $Customer->Counter_id = $request->Counter_id;
-            $Customer->user_id = Auth::id();
+//            $Customer->user_id = Auth::id();
             $Customer->Status = $request->Status;
             $Customer->save();
-            return 'asw';
             toastr()->success('تم اضافة المستخدم بنجاح ');
             return redirect()->route('Customer.getRegister');
         } catch (\Exception $e) {
@@ -105,7 +104,7 @@ class CustomerController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
 
         if (!$request->has('Status'))
@@ -117,18 +116,18 @@ class CustomerController extends Controller
         try {
             $Customer = Customer::findOrFail($id);
             $Customer->Name = $request->Name;
-            $Customer->Email = $request->Email;
+            $Customer->email = $request->Email;
             $Customer->Phone = $request->Phone;
             $Customer->Price = $request->Price;
             $Customer->State_id = $request->State_id;
             $Customer->Address = $request->Address;
             $Customer->Counter_id = $request->Counter_id;
-            $Customer->user_id = Auth::id();
             $Customer->Status = $request->Status;
             $Customer->save();
             toastr()->success('تم اضافة المستخدم بنجاح ');
             return redirect()->route('Customers.index');
         } catch (\Exception $e) {
+            return $e;
             toastr()->error('هناك خطا ما يرجى المحاولة لاحقا');
             return redirect()->route('Customers.index');
 

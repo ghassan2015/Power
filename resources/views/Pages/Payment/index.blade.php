@@ -6,7 +6,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                <h3 class="card-label">لوحة عرض الفواتير </h3>
+                <h3 class="card-label">لوحة عرض الدفعات </h3>
             </div>
             <div class="card-toolbar">
                 <!--begin::Dropdown-->
@@ -58,7 +58,7 @@
                 <!--end::Dropdown-->
                 <!--begin::Button-->
                 <a type="button" href="{{route('Payment.create')}}" class="btn btn-primary"><i class="la la-plus"></i>اضافة
-                    فاتورة جديد
+                    دفعة جديد
                 </a>
 
                 <!--end::Button-->

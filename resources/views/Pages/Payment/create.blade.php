@@ -76,13 +76,12 @@
                             <!-- end: Example Code-->
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="row" style="text-align: center">
-                            <div class="col-lg-12">
-                                <button type="submit" class="btn btn-primary mr-2">تاكيد</button>
-                                <button type="reset" class="btn btn-secondary">الغاء</button>
-                            </div>
-                        </div>
+                    <div class="card-footer" style="text-align: left">
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+
                     </div>
                 </form>
                 <!--end::Form-->

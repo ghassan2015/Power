@@ -9,9 +9,9 @@ class Invoice extends Model
     //protected $fillable = ['Name', 'Counter_id', 'current_reading', 'Total', 'previous_reading', 'Status'];
     protected $guarded = [];
 
-    public function Counter()
+    public function Customer()
     {
-        return $this->belongsTo(Counter::class, 'Counter_id');
+        return $this->belongsTo(Customer::class, 'Customer_id');
     }
 
     public function Payment()

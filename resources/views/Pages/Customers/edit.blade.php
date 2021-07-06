@@ -1,204 +1,176 @@
 @extends('layouts.front')
 @section('Content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card card-custom">
-                    <div class="card-header">
-                        <div class="card-title">
-                    <span class="card-icon">
-                        <i class="flaticon2-heart-rate-monitor text-primary"></i>
-                    </span>
-                            <h3 class="card-label">لوحة تعديل المشتركين </h3>
-                        </div>
-                        <div class="card-toolbar">
-                            <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline mr-2">
+        <div class="card">
+            <div class="card-header">
+                <div style="float: right;">
+                    <h4>اضافة مشترك جديد</h4>
+                </div>
+                <div style="float: left;">
+                    <a href="{{route('Customers.index')}}" type="button" class="btn btn-primary">
+                        الرجوع للقائمة السابقة
+                        <i class="fas fa-backward"></i>
+                    </a>
+                </div>
 
-                                <!--begin::Dropdown Menu-->
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                </div>
-                                <!--end::Dropdown Menu-->
-                            </div>
-                            <!--end::Dropdown-->
-                            <!--begin::Button-->
-                            <a type="button" class="btn btn-primary" href="{{route('Customers.index')}}"><i
-                                    class="la la-backward"></i>الرجوع للقائمة السابقة
-                            </a>
-
-                            <!--end::Button-->
-                        </div>
-                    </div>
+            </div>
+            <div class="card-body" style="text-align:right ">
+                <form class="form" action="{{route('Customer.update',$Customer->id)}}" method="post">
+                    @csrf
+                    @method('PUT')
                     <div class="card-body">
-                        <form class="form" action="{{route('Customer.update',$Customer->id)}}" method="post">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label>الاسم :</label>
+                                <input type="text" name="Name" class="form-control"
+                                       value="{{$Customer->Name}}"
+                                       placeholder="ادخل اسم المشترك"/>
+                                @error("Name")
+                                <span class="text-danger"> {{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>الايميل:</label>
+                                <input type="email" class="form-control"
+                                       value="{{$Customer->email}}"
 
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>الاسم:<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20"
-                                               data-parsley-class-handler="#lnWrapper"
-                                               name="Name" required type="text"
-                                               value="{{$Customer->Name}}"
-                                        >
-                                        @error("Name")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                       placeholder="ادخل ايميل المشترك" id="Email" name="Email"/>
+                                @error("Email")
+                                <span class="text-danger"> {{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label>رقم الهاتف :</label>
+                                <input type="text" name="Phone" class="form-control"
+                                       value="{{$Customer->Phone}}"
 
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>الايميل<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20"
-                                               data-parsley-class-handler="#lnWrapper"
-                                               name="Email" required type="email" value="{{$Customer->Email}}">
-                                        @error("Email")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                       placeholder="ادخل رقم هاتف المشترك"/>
+                                @error("Phone")
+                                <span class="text-danger"> {{ $message }}</span>
+                                @enderror
+                            </div>
+                            <input type="hidden" name="user_id" class="form-control"
+                                   value="{{auth()->id()}}">
+                            <div class="col-lg-6">
+                                <label>سعر الكيلوالواحد:</label>
+                                <input type="text" class="form-control"
+                                       value="{{$Customer->Price}}"
 
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>العنوان:<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20"
-                                               data-parsley-class-handler="#lnWrapper"
-                                               name="Address" required type="text" value="{{$Customer->Address}}">
-                                        @error("Address")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                       placeholder="ادخل سعر كيلو الواحدلمشترك" id="Price" name="Price"/>
+                                @error("Price")
+                                <span class="text-danger"> {{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>المحافظة <span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="State_id">
-                                            <option
-                                                value="{{ $Customer->State_id }}">{{ $Customer->State->Name }}</option>
 
-                                            @foreach ($States as $states)
-                                                <option value="{{ $states->id }}">{{ $states->Name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error("State_id")
-                                    <span class="text-danger">{{ $message }} </span>
-                                    @enderror
-                                </div>
+                        <div class="form-group row mg-b-20">
+                            <div class="col-lg-6">
+                                <label>العنوان</label>
+                                <input type="text" class="form-control"
+                                       value="{{$Customer->Address}}"
 
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>سعر الكليو الواحد:<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20" type="number" required
-                                               name="Price" min="0"
-                                               value="{{$Customer->Price}}" step="any"
-                                        >
-                                        @error("Price")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label> رقم الجوال<span class="tx-danger">*</span></label>
-                                        <input class="form-control form-control-sm mg-b-20" type="text" required
-                                               name="Phone"
-                                               value="{{$Customer->Phone}}"
+                                       placeholder="الرجاء ادخال العنوان"
+                                       id="Address" name="Address"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>المحافضة:</label>
+                                <select class="form-control kt_select2_2" name="State_id" id="State_id"
+                                        onchange="myFunction()">
+                                    <!--placeholder-->
+                                    <option value="{{ $Customer->State->id }}"> {{  $Customer->State->Name }}
 
-                                        >
-                                        @error("Phone")
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row mg-b-20">
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>رقم الصندوق <span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="Box_id"
-                                                onchange="console.log($(this).val())">
-                                            <option
-                                                value="{{ $Customer->Counter_id }}">{{ $Customer->Counter->Box->Name }}</option>
+                                    @foreach ($States as $state)
+                                        <option value="{{ $state->id }}"> {{ $state->Name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mg-b-20">
+                            <div class="col-lg-6">
+                                <label>مكان المجمع</label>
+                                <select class="form-control kt_select2_2" name="Box_id" id="Box_id">
+                                    <!--placeholder-->
+                                    <option
+                                        value="{{ $Customer->Counter->Box->id }}"> {{  $Customer->Counter->Box->Name }}</option>
+                                    @foreach ( $Boxes as  $Box)
+                                        <option value="{{$Box->id }}"> {{  $Box->Name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>رقم العداد:</label>
+                                <select class="form-control kt_select2_2" name="Counter_id" id="Counter_id"
+                                        onchange="myFunction()">
+                                    <option
+                                        value="{{ $Customer->Counter->id }}"> {{  $Customer->Counter->Name }}
+                                    </option>
+                                    <!--placeholder-->
 
-                                            <!--placeholder-->
-                                            <option value="" selected
-                                                    disabled> رقم الصندوق
-                                            </option>
-                                            @foreach ($Boxes as $Box)
-                                                <option value="{{ $Box->id }}"> {{ $Box->Name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error("Box_id")
-                                        <span class="text-danger">{{ $message }} </span>
-                                        @enderror
-                                    </div>
-                                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                        <label>العداد:<span class="tx-danger">*</span></label>
-                                        <select class="form-control form-control-sm mg-b-20" name="Counter_id">
-                                            <option
-                                                value="{{ $Customer->Counter_id }}">{{ $Customer->Counter->Name }}</option>
-
-                                        </select>
-                                        @error("Counter_id")
-                                        <span class="text-danger"> </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-1 col-form-label">الحالة</label>
-                                    <div>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-1">الحالة</label>
+                            <div>
 															<span
                                                                 class="switch switch-outline switch-icon switch-success">
 																<label>
 																	<input type="checkbox" checked="checked"
+                                                                           name="Status"
                                                                            value="1"
-                                                                           name="Status"/>
+                                                                    />
 																	<span></span>
 																</label>
 															</span>
-                                    </div>
-                                </div>
-
-
                             </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            </div>
-                        </form>
-                        <!--end::Form-->
+                        </div>
+                        <!-- end: Example Code-->
                     </div>
-                    <!--end::Card-->
-                    <!--begin::Card-->
-                </div>
-                <!--end::Card-->
+                    <div class="card-footer" style="text-align: left">
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+
+                    </div>
+                </form>
+                <!--end::Form-->
             </div>
         </div>
+    </div>
 
 
-        @endsection
-        @section('js')
-            <script>
-                $(document).ready(function () {
-                    $('select[name="Box_id"]').on('change', function () {
-                        var Box_id = $(this).val();
-                        console.log(Box_id);
-                        if (Box_id) {
-                            $.ajax({
-                                url: "{{ URL::to('Dashboard/Get_counter') }}/" + Box_id,
-                                type: "GET",
-                                dataType: "json",
-                                success: function (data) {
 
-                                    $('select[name="Counter_id"]').empty();
-                                    $('select[name="Counter_id"]').append('<option selected disabled >اختر العداد .</option>');
-                                    $.each(data, function (key, value) {
-                                        $('select[name="Counter_id"]').append('<option value="' + key + '">' + value + '</option>');
-                                    });
-                                },
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function () {
+
+            $('select[name="Box_id"]').on('change', function () {
+
+                var Box_id = $(this).val();
+                if (Box_id) {
+                    $.ajax({
+                        url: "{{ URL::to('Dashboard/Get_counter') }}/" + Box_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            $('select[name="Counter_id"]').empty();
+                            $('select[name="Counter_id"]').append('<option selected disabled >اختر العداد .</option>');
+                            $.each(data, function (key, value) {
+                                $('select[name="Counter_id"]').append('<option value="' + key + '">' + value + '</option>');
                             });
-                        } else {
-                            console.log('AJAX load did not work');
-                        }
+                        },
                     });
-                });
-            </script>
+                } else {
+                    console.log('AJAX load did not work');
+                }
+            });
+        });
+    </script>
 @endsection

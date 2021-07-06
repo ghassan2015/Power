@@ -10,57 +10,11 @@
             </div>
             <div class="card-toolbar">
                 <!--begin::Dropdown-->
-                <div class="dropdown dropdown-inline mr-2">
-                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export
-                    </button>
-                    <!--begin::Dropdown Menu-->
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                        <ul class="nav flex-column nav-hover">
-                            <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an
-                                option:
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon la la-print"></i>
-                                    <span class="nav-text">Print</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon la la-copy"></i>
-                                    <span class="nav-text">Copy</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon la la-file-excel-o"></i>
-                                    <span class="nav-text">Excel</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon la la-file-text-o"></i>
-                                    <span class="nav-text">CSV</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon la la-file-pdf-o"></i>
-                                    <span class="nav-text">PDF</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--end::Dropdown Menu-->
-                </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
 
-                <button type="button" class="button x-small" data-toggle="modal" data-target="#exampleModal">
-                    {{ trans('My_Classes_trans.add_class') }}
-                </button>
+                <a class="btn btn-primary" href="{{route('Invoice.create')}}" id="createNewProduct">
+                    <i class="fa fa-plus" aria-hidden="true"></i> اضافة فاتورة جديدة</a>
 
 
                 <!--end::Button-->
@@ -101,97 +55,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">
-                        {{ trans('My_Classes_trans.add_class') }}
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form class=" row mb-30" action="{{ route('Invoice.store') }}" method="POST">
-                        @csrf
-                        <div class="card-body">
-                            <div class="repeater">
-                                <div data-repeater-list="List_Classes">
-                                    <div data-repeater-item>
-                                        <div class="row">
-
-                                            <div class="col">
-                                                <label for="Name"
-                                                       class="mr-sm-2">{{ trans('My_Classes_trans.Name_class') }}
-                                                    :</label>
-                                                <input class="form-control" type="text" name="Name"/>
-                                            </div>
-
-
-                                            <div class="col">
-                                                <label for="Name"
-                                                       class="mr-sm-2">{{ trans('My_Classes_trans.Name_class_en') }}
-                                                    :</label>
-                                                <input class="form-control" type="text" name="Name_class_en"/>
-                                            </div>
-
-
-                                            <div class="col">
-                                                <label for="Name_en"
-                                                       class="mr-sm-2">{{ trans('My_Classes_trans.Name_Grade') }}
-                                                    :</label>
-
-                                                <div class="box">
-                                                    {{--                                                    <select class="fancyselect" name="Grade_id">--}}
-                                                    {{--                                                        @foreach ($Grades as $Grade)--}}
-                                                    {{--                                                            <option value="{{ $Grade->id }}">{{ $Grade->Name }}</option>--}}
-                                                    {{--                                                        @endforeach--}}
-                                                    {{--                                                    </select>--}}
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="Name_en"
-                                                       class="mr-sm-2">{{ trans('My_Classes_trans.Processes') }}
-                                                    :</label>
-                                                <input class="btn btn-danger btn-block" data-repeater-delete
-                                                       type="button"
-                                                       value="{{ trans('My_Classes_trans.delete_row') }}"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-20">
-                                    <div class="col-12">
-                                        <input class="button" data-repeater-create type="button"
-                                               value="{{ trans('My_Classes_trans.add_row') }}"/>
-                                    </div>
-
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
-                                    <button type="submit"
-                                            class="btn btn-success">{{ trans('Grades_trans.submit') }}</button>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
 
     <@stop
 @section('js')

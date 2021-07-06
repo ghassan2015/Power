@@ -83,7 +83,13 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">تاكيد</button>
+                            <div class="card-footer" style="text-align: left">
+                                <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                                       aria-hidden="true"></i></span>تاكيد
+                                </button>
+
+
+                            </div>
                         </form>
                     </div>
                 </div>

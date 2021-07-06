@@ -29,6 +29,9 @@ class BoxController extends Controller
             $data = Box::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('State', function ($data) {
+                    return $data->State->Name;
+                })
                 ->addColumn('action', function ($data) {
 
                     $button = '<a name="edit" href="' . url("/Dashboard/Boxs/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';

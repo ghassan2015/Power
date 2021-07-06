@@ -107,14 +107,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة مستخدم جديد</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة عداد جديد</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form class="needs-validation" novalidate action="{{route('Counters.store')}}" method="post">
-                        @csrf
+                <form class="needs-validation" novalidate action="{{route('Counters.store')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">رقم العداد</label>
                             <input type="text" name="Name" class="form-control" id="exampleInputEmail1"
@@ -135,8 +136,11 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1"> مكان التجميع </label>
+                        </div>
+                        <div class="form-group">
+
                             <select name="Box_id"
-                                    class="custom-select"
+                                    class="custom-select kt_select2_2"
                                     onclick="console.log($(this).val())">
                                 <!--placeholder-->
                                 @foreach ( $Boxs as  $Box)
@@ -165,16 +169,23 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">تاكيد</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                class="fa fa-window-close" aria-hidden="true"></i>
+                            اغلاق
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <@stop
+@endsection
 @section('js')
     <script type="text/javascript">
         Counter_id = '';
@@ -227,5 +238,23 @@
 
 
         });
+
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
     </script>
 @endsection

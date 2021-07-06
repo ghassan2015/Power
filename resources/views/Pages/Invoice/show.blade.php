@@ -13,7 +13,10 @@
                          style="background-image: url({{asset('assets/media/bg/bg-6.jpg')}});">
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
-                                <h1 class="display-4 text-white font-weight-boldest mb-10">فاتورة</h1>
+                                <h1 class="display-4 text-white font-weight-boldest mb-10">
+                                    فاتورة شهر
+                                    {{ $inovice->created_at->format('M-m')}}
+                                </h1>
                                 <div class="d-flex flex-column align-items-md-end px-0">
                                     <!--begin::Logo-->
                                     <a href="#" class="mb-5">
@@ -30,16 +33,16 @@
                             <div class="d-flex justify-content-between text-white pt-6">
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolde mb-2r">تاريخ</span>
-                                    <span class="opacity-70">Dec 12, 2017</span>
+                                    <span class="opacity-70">{{ $inovice->created_at->format('d/m/Y')}}</span>
                                 </div>
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2">رقم الفاتورة:</span>
-                                    <span class="opacity-70">GS 000014</span>
+                                    <span class="opacity-70">{{ $inovice->Name}}</span>
                                 </div>
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2">اسم المشترك</span>
-                                    <span class="opacity-70">Iris Watson, P.O. Box 283 8562 Fusce RD.
-														<br/>Fredrick Nebraska 20620</span>
+                                    <span class="opacity-70">{{ $inovice->Name}}
+														<br/>{{ $inovice->Customer->Address}}</span>
                                 </div>
                             </div>
                         </div>
@@ -60,29 +63,29 @@
                                             بالكيلو واط
                                         </th>
                                         <th class="text-right font-weight-bold text-muted text-uppercase">قيمة
-                                            المستحقة
+                                            المستحقة للدفع
+                                        </th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">
+                                            حالة الدفع
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="font-weight-boldest font-size-lg">
-                                        <td class="pl-0 pt-7">Creative Design</td>
-                                        <td class="text-right pt-7">80</td>
-                                        <td class="text-right pt-7">$40.00</td>
-                                        <td class="text-danger pr-0 pt-7 text-right">$3200.00</td>
+                                        <td class="pl-0 pt-7">{{$inovice->Customer->Name}}</td>
+                                        <td class="text-right pt-7">{{$inovice->Customer->Price}}</td>
+                                        <td class="text-right pt-7">{{($inovice->current_reading)-($inovice->previous_reading)}}</td>
+                                        <td class="text-danger pr-0 pt-7 text-right">${{$inovice->Total}}</td>
+                                        <td class="text-danger pr-0 pt-7 text-right">
+
+                                            @if($inovice->Status)
+                                                <span class="badge badge-success">مدفوعة</span>
+                                            @else
+                                                <span class="badge badge-danger">غير مدفوعة</span>
+                                        @endif
+
                                     </tr>
-                                    <tr class="font-weight-boldest border-bottom-0 font-size-lg">
-                                        <td class="border-top-0 pl-0 py-4">Front-End Development</td>
-                                        <td class="border-top-0 text-right py-4">120</td>
-                                        <td class="border-top-0 text-right py-4">$40.00</td>
-                                        <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td>
-                                    </tr>
-                                    <tr class="font-weight-boldest border-bottom-0 font-size-lg">
-                                        <td class="border-top-0 pl-0 py-4">Back-End Development</td>
-                                        <td class="border-top-0 text-right py-4">210</td>
-                                        <td class="border-top-0 text-right py-4">$60.00</td>
-                                        <td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
