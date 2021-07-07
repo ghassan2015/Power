@@ -33,10 +33,11 @@ class BoxController extends Controller
                     return $data->State->Name;
                 })
                 ->addColumn('action', function ($data) {
+                    $button = '<a name="edit"   id="' . $data->id . '" Name_Box="' . $data->Name . '"  Location_Box="' . $data->Location . '"  State_box="' . $data->State->Name . '"State_id="' . $data->State->id . '" class="edit btn btn-primary btn-sm edit_Box"><span><i class="fas fa-edit"></i></span>تعديل</a>';
 
-                    $button = '<a name="edit" href="' . url("/Dashboard/Boxs/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
+//                    $button = '<a name="edit" id="' . $data->id . '" .Box_id="' . $data->id . '" class="edit btn btn-primary btn-sm edit_Box"><span><i class="fas fa-edit"></i></span>تعديل</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
+                    $button .= '<button type="button" name="delete" id="' . $data->id . '" Name_Box="' . $data->Name . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
 
 
@@ -95,48 +96,30 @@ class BoxController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+//    public function edit($id)
+//    {
+//        $States = State::all();
+//        $box = Box::find($id);
+//        if (!$box) {
+//            toastr()->error('هذا الصندوق غير موجود حاول مرة اخرى');
+//            return redirect()->route('Boxs.index');
+//        }
+//        return view('Pages.Boxs.edit', compact('box', 'States'));
+//
+//    }
+
+
+    public function update(BoxRequest $request)
     {
-        $States = State::all();
-        $box = Box::find($id);
-        if (!$box) {
-            toastr()->error('هذا الصندوق غير موجود حاول مرة اخرى');
-            return redirect()->route('Boxs.index');
-        }
-        return view('Pages.Boxs.edit', compact('box', 'States'));
+        $Box = Box::find($request->id);
 
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-//        return  $request;
-
-
-        $Box = Box::findOrFail($id);
-
-        //  $validated = $request->validated();
-        $request->validate([
-            'Location' => 'required',
-            'Name' => ['required', Rule::unique('boxes')->ignore($Box->id),],
-        ]);
-
-        if (!$Box) {
-            toastr()->error('هذا الصندوق غير موجود حاول مرة اخرى');
-            return redirect()->route('Boxs.index');
-        }
         $Box->Name = $request->Name;
         $Box->Location = $request->Location;
         $Box->State_id = $request->State_id;
         $Box->save();
         toastr()->success('تمت عملية التعديل بنجاح');
         return redirect()->route('Boxs.index');
+
 
     }
 
@@ -146,32 +129,18 @@ class BoxController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $Counter = Counter::where('Box_id', $id)->get();
-        if ($Counter) {
-            toastr()->error('لم تتم عملية الحذف هذا العنصر بنجاح بسبب وجود');
-
-        } else {
-            $box = Box::where('id', $id)->delete();
+        $Counter = Counter::where('Box_id', $request->id)->get();
+        if ($Counter)
+            toastr()->error('لم تتم عملية الحذف هذا العنصر بنجاح');
+        else {
+            Box::where('id', $request->id)->delete();
+            toastr()->success('تمت عملية التعديل بنجاح');
 
         }
-
-
-        toastr()->success('تمت عملية التعديل بنجاح');
         return redirect()->route('Boxs.index');
-    }
 
-    public function createPDF()
-    {
-        // retreive all records from db
-        $States = State::all();
 
-        // share data to view
-        view()->share('States', $States);
-        $pdf = PDF::loadView('Pages.Boxs.index', $States)->setOptions(['defaultFont' => 'sans-serif']);;
-
-        // download PDF file with download method
-        return $pdf->download('pdf_file.pdf');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CounterRequest;
 use App\Models\Box;
 use App\Models\Counter;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Validation\Rule;
@@ -36,9 +37,9 @@ class CounterController extends Controller
                 })
                 ->addColumn('action', function ($data) {
 
-                    $button = '<a name="edit" href="' . url("/Dashboard/Counters/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
+                    $button = '<a name="edit"  id="' . $data->id . '" Name_Counter="' . $data->Name . '"  Counter_Box_id="' . $data->Box_id . '" Counter_active="' . $data->is_active . '" Counter_Box_Name="' . $data->Box->Name . '" class="edit btn btn-primary btn-sm edit_Counter"><span><i class="fas fa-edit"></i></span>تعديل</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
+                    $button .= '<button type="button" name="delete" id="' . $data->id . '"  Name_Counter="' . $data->Name . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
                     return $button;
                 })
@@ -59,6 +60,7 @@ class CounterController extends Controller
 
     public function store(CounterRequest $request)
     {
+
         try {
             if (!$request->has('active'))
                 $request->request->add(['active' => 0]);
@@ -77,7 +79,6 @@ class CounterController extends Controller
             return redirect()->route('Counters.index');
         }
 
-
     }
 
 
@@ -91,28 +92,25 @@ class CounterController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-
         try {
-            $counter = Counter::findOrFail($id);
+            $counter = Counter::findOrFail($request->id);
             $request->validate([
                 'Box_id' => 'required',
                 'Name' => ['required', Rule::unique('Counters')->ignore($counter->id),],
             ]);
 
             if (!$request->has('active'))
-                $request->request->add(['is_active' => 0]);
+                $request->request->add(['active' => 0]);
             else
-                $request->request->add(['is_active' => 1]);
+                $request->request->add(['active' => 1]);
 
             $counter->update($request->all());
-
             toastr()->success('تمت عملية  التعديل بنجاح');
             return redirect()->route('Counters.index');
 
         } catch (\Exception  $exception) {
-            return $exception;
             toastr()->success('هناك خطا ما يرجى المحاولة فيما بعد');
             return redirect()->route('Counters.index');
 
@@ -120,20 +118,25 @@ class CounterController extends Controller
     }
 
 
-    public function destroy($id)
-
+    public function destroy(Request $request)
     {
         try {
-            $counter = Counter::findOrFail($id)->delete();
-            toastr()->success('تمت عملية الحذف بنجاح');
+            $Customer = Customer::where('Counter_id', $request->id)->get();
+
+            if ($Customer)
+                toastr()->error('لم تتم عملية الحذف هذا العنصر بنجاح بسبب وجود مستخدم');
+            else {
+                Counter::where('id', $request->id)->delete();
+                toastr()->success('تمت عملية التعديل بنجاح');
+            }
             return redirect()->route('Counters.index');
 
-
         } catch (\Exception $exception) {
+            toastr()->error('لم تتم عملية الحذف هذا العنصر بنجاح');
+            return redirect()->route('Counters.index');
 
         }
-//        $message = array('message' => 'Success!', 'title' => 'Delete');
-//        return response()->json($message);
+
 
     }
 }

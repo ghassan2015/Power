@@ -1,50 +1,81 @@
 @extends('layouts.front')
 @section('Content')
     <div class="container">
-        {{--        <div class="card-title">--}}
 
-        {{--            <button type="button" class="btn btn-primary" data-toggle="modal"--}}
-        {{--                    data-target="#exampleModal" style="float: right">--}}
-        {{--                اضافة صندوق جديد--}}
-        {{--            </button>--}}
-        {{--        </div>--}}
+
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">لوحة عرض مجمعات </h3>
+                    <h3 class="card-label">لوحة عرض انواع المصاريف </h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
                     <div class="dropdown dropdown-inline mr-2">
-
+                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="la la-download"></i>Export
+                        </button>
                         <!--begin::Dropdown Menu-->
-
+                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                            <ul class="nav flex-column nav-hover">
+                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an
+                                    option:
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon la la-print"></i>
+                                        <span class="nav-text">Print</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon la la-copy"></i>
+                                        <span class="nav-text">Copy</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon la la-file-excel-o"></i>
+                                        <span class="nav-text">Excel</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon la la-file-text-o"></i>
+                                        <span class="nav-text">CSV</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon la la-file-pdf-o"></i>
+                                        <span class="nav-text">PDF</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <!--end::Dropdown Menu-->
                     </div>
-
                     <!--end::Dropdown-->
                     <!--begin::Button-->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#exampleModal"><i class="la la-plus"></i>اضافة مجمع جديد
+                            data-target="#exampleModal"><i class="la la-plus"></i>اضافة نوع المصاريف
                     </button>
 
                     <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered data-table" style="text-align: right">
+                <table class="table table-bordered data-table">
                     <thead>
                     <tr>
+
                         <th width="2%">#</th>
-                        <th width="30%">رقم مجمع العدادات الكهربائية</th>
-                        <th width="30%">المكان</th>
+                        <th width="10%">الاسم</th>
 
-                        <th width="10%"> المحافظة</th>
-
-                        <th width="28%">العمليات</th>
+                        <th width="20%">العمليات</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,50 +94,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form class="needs-validation" novalidate action="{{route('Boxs.store')}}" method="post">
+                    <form class="needs-validation" novalidate action="{{route('Options.store')}}" method="post">
 
                         <div class="modal-body">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">رقم الصندوق</label>
+                                <label for="exampleInputEmail1">الاسم</label>
                                 <input type="text" name="Name" class="form-control" id="exampleInputEmail1"
-                                       aria-describedby="emailHelp" placeholder="ادخل رقم الصندوق" required>
+                                       aria-describedby="emailHelp"
+                                       placeholder=" ادخل نوع المصاريف "
+                                       required>
                                 <div class="invalid-feedback">
-                                    الرجاء ادخل الرقم الصندوق
+                                    الرجاء ادخل نوع المصاريف
                                 </div>
                                 <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">مكان الصندوق</label>
-                                <input type="text" name="Location" class="form-control" id="exampleInputPassword1"
-                                       placeholder="الرجاء ادخل مكان الصندوق هنا" required>
-                                <div class="invalid-feedback">
-                                    الرجاء ادخل العنوان الخاص بالصندوق
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="exampleInputPassword1">مكان العداد</label>
-                            </div>
-                            <div class="form-group row">
 
-                                <select name="State_id" class="form-group row kt_select2_2"
-                                        style="width: 30%"
-                                        onclick="console.log($(this).val())">
-                                    <!--placeholder-->
-                                    {{--                                    <option style="float: right">--}}
-                                    {{--                                        الرجاء ادخل المحافظة--}}
-                                    {{--                                    </option>--}}
-                                    @foreach ( $States as  $State)
-                                        <option
-                                            value="{{ $State->id }}">
-                                            {{ $State->Name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('State_id')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
 
                         </div>
 
@@ -126,7 +129,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="edit_Box_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+        <div class="modal fade" id="edit_Options_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true" style="text-align: right">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -136,49 +140,26 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form class="needs-validation" novalidate action="{{route('Boxs.update')}}" method="post">
+                    <form class="needs-validation" novalidate action="{{route('Options.update','test')}}" method="post">
 
                         <div class="modal-body">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="id" class="form-control" id="id"
+                            <input type="hidden" name="id" class="form-control" id="Option_id"
                             >
                             <div class="form-group">
                                 <label for="exampleInputEmail1">رقم الصندوق</label>
-                                <input type="text" name="Name" class="form-control" id="Name_box"
-                                       aria-describedby="emailHelp" placeholder="ادخل رقم الصندوق"
+                                <input type="text" name="Name" class="form-control" id="Name_Option"
+                                       aria-describedby="emailHelp" placeholder="الرجاء ادخل نوع المصاريف التشغيلية "
                                        value=""
 
                                        required>
                                 <div class="invalid-feedback">
-                                    الرجاء ادخل الرقم الصندوق
+                                    الرجاء ادخل نوع المصاريف التشغيلية
                                 </div>
                                 <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">مكان الصندوق</label>
-                                <input type="text" name="Location" class="form-control" id="Location_box"
-                                       placeholder="الرجاء ادخل مكان الصندوق هنا" required>
-                                <div class="invalid-feedback">
-                                    الرجاء ادخل العنوان الخاص بالصندوق
-                                </div>
-                            </div>
-                            <div class="form-group ">
-                                <label for="exampleInputPassword1">مكان العداد</label>
-                            </div>
-                            <select name="State_id" class="form-group row kt_select2_2" style="width: 50%"
-                                    id="State_id" onclick="console.log($(this).val())">
 
-                                @foreach ( $States as  $State)
-                                    <option
-                                        value="{{ $State->id }}">
-                                        {{ $State->Name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('State_id')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
 
                         </div>
 
@@ -212,7 +193,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('Box.destroy', 'test') }}" method="post">
+                        <form action="{{ route('Options.destroy', 'test') }}" method="post">
                             {{ method_field('Delete') }}
                             @csrf
                             <h4>هل انت متاكدمن عملية الحذف</h4>
@@ -234,51 +215,73 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <@stop
 @section('js')
     <script type="text/javascript">
-        $(document).on('click', '.edit_Box', function (e) {
-            $('#edit_Box_modal').modal('show');
-            var Name_Box = $(this).attr('Name_Box');
-            $('#Name_box').val(Name_Box);
-            var Location_Box = $(this).attr('Location_Box');
-            $('#Location_box').val(Location_Box);
-            var State_Box = $(this).attr('State_box');
-            var State_id = $(this).attr('State_id');
-
-            $('#State_id').append(`<option value="${State_id}">
-                                       ${State_Box}
-                                  </option>`);
-            var Box_id = $(this).attr('id');
-            $('#id').val(Box_id);
-        });
-
-        $(document).on('click', '.delete', function (e) {
-            var $id = $(this).attr('id');
-            var Name_Box = $(this).attr('Name_Box');
-            $('#Delete_id').val($id);
-
-            $('#Name_Delete').val(Name_Box);
-
+        Counter_id = '';
+        $(document).on('click', '.delete', function () {
+            Option_id = $(this).attr('id');
+            $('#Delete_id').val(Option_id);
             $('#confirmModal').modal('show');
+            var Name_Delete = $(this).attr('Name_Delete');
+            $('#Name_Delete').val(Name_Delete);
+
+        });
+        var eval_id = $(this).attr('id');
+
+        $(document).on('click', '.edit_Option', function (e) {
+            Option_id = $(this).attr('id');
+
+            $('#edit_Options_modal').modal('show');
+            var Name_Option = $(this).attr('Name_Option');
+            $('#Name_Option').val(Name_Option);
+            $('#Option_id').val(Option_id);
+
         });
 
-        $('.data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('Boxs.index') }}",
 
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'Name', name: 'Name'},
-                {data: 'Location', name: 'Location'},
-                {data: 'State', name: 'State'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+            {{--$('#ok_button').click(function () {--}}
+            {{--    $.ajax({--}}
+            {{--        url: "/Dashboard/Options/destroy/" + Counter_id,--}}
+            {{--        beforeSend: function () {--}}
+            {{--            $('#ok_button').text('Deleting...');--}}
+            {{--        }--}}
+            {{--        ,--}}
+            {{--        success: function (data) {--}}
+            {{--            setTimeout(function () {--}}
+            {{--                $('#confirmModal').modal('hide');--}}
+            {{--                $('.data-table').DataTable().ajax.reload();--}}
+            {{--            }, 2000);--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--});--}}
+            {{--$(function () {--}}
 
-            ]
-        });
+            {{--    $.ajaxSetup({--}}
+            {{--        headers: {--}}
+            {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+            {{--        }--}}
+            {{--    });--}}
+
+        var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('Options.index') }}",
+
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'Name', name: 'Name'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+
+                ]
+            });
+
+
+        {{--});--}}
         (function () {
             'use strict';
             window.addEventListener('load', function () {

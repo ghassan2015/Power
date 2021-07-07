@@ -84,20 +84,111 @@
             </table>
         </div>
 
-        <div id="confirmModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h2 class="modal-title">Confirmation</h2>
-                    </div>
+    </div>
+    <div class="modal fade" id="edit_Counter_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="text-align: right">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تعديل مجمع </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="needs-validation" novalidate action="{{route('Counters.update','test')}}" method="post">
+
                     <div class="modal-body">
-                        <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" class="form-control" id="edit_id">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">رقم العداد</label>
+                            <input type="text" name="Name" class="form-control" id="Name_counter"
+                                   aria-describedby="emailHelp" placeholder="ادخل رقم العداد"
+                                   value=""
+
+                                   required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخل الرقم العداد
+                            </div>
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="exampleInputPassword1">مكان العداد</label>
+                        </div>
+                        <select name="Box_id" class="form-group row kt_select2_2" style="width: 50%"
+                                id="Box_id" onclick="console.log($(this).val())">
+                            @foreach($Boxs as $box)
+                                <option value="{{$box->id}}">{{$box->Name}}</option>
+                            @endforeach
+                        </select>
+                        @error('Box_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label">الحالة</label>
+                            <div>
+                                            <span class="switch switch-outline switch-icon switch-success">
+                                                <label>
+                                                    <input type="checkbox" value="1"
+                                                           name="is_active"
+                                                           id="active"/>
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                class="fa fa-window-close" aria-hidden="true"></i>
+                            اغلاق
+                        </button>
                     </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div id="confirmModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+                        id="exampleModalLabel">
+                        حذف العداد
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('Counters.destroy', 'test') }}" method="post">
+                        {{ method_field('Delete') }}
+                        @csrf
+                        <h4>هل انت متاكدمن عملية الحذف</h4>
+                        <input type="hidden">
+                        <input id="Delete_id" type="hidden" name="id" class="form-control">
+                        <input id="Name_Counter" type="text" name="Name_Delete" class="form-control" disabled>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" name="ok_button" id="ok_button" class="btn btn-danger"><span><i
+                                        class="fa fa-paper-plane"
+                                        aria-hidden="true"></i></span>تاكيد
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                    class="fa fa-window-close" aria-hidden="true">الغاء</i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -141,7 +232,7 @@
 
                             <select name="Box_id"
                                     class="custom-select kt_select2_2"
-                                    onclick="console.log($(this).val())">
+                                    onclick="console.log($(this).val())" style="width: 50%;">
                                 <!--placeholder-->
                                 @foreach ( $Boxs as  $Box)
                                     <option
@@ -189,27 +280,40 @@
 @section('js')
     <script type="text/javascript">
         Counter_id = '';
+        $(document).on('click', '.edit_Counter', function (e) {
+            $('#edit_Counter_modal').modal('show');
+            var id = $(this).attr('id');
+            $('#edit_id').val(id);
+            var Name_Counter = $(this).attr('Name_Counter');
+            $('#Name_counter').val(Name_Counter);
+            var Box_id = $(this).attr('Counter_Box_id');
+            var Counter_Box_id = $(this).attr('Counter_Box_id');
+            var Counter_Box_Name = $(this).attr('Counter_Box_Name');
+            $('#Box_id').append(`<option value="${Counter_Box_id}">
+                                       ${Counter_Box_Name}
+                                  </option>`);
+            var Counter_active = $(this).attr('Counter_active');
+            if (Counter_active == 1) {
+                $("#active").prop("checked", true);
+
+            } else {
+
+                $("#active").prop("checked", false);
+
+            }
+
+        });
+
+
         $(document).on('click', '.delete', function () {
-            Counter_id = $(this).attr('id');
-            console.log($(this).attr('id'));
+            var Counter_id = $(this).attr('id');
+            $('#Delete_id').val(Counter_id);
+            var Counter_Name = $(this).attr('Name_Counter');
+            $('#Name_Counter').val(Counter_Name);
             $('#confirmModal').modal('show');
         });
 
-        $('#ok_button').click(function () {
-            $.ajax({
-                url: "/Dashboard/Counters/destroy/" + Counter_id,
-                beforeSend: function () {
-                    $('#ok_button').text('Deleting...');
-                }
-                ,
-                success: function (data) {
-                    setTimeout(function () {
-                        $('#confirmModal').modal('hide');
-                        $('.data-table').DataTable().ajax.reload();
-                    }, 2000);
-                }
-            })
-        });
+
         $(function () {
 
 

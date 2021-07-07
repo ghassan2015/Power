@@ -8,15 +8,15 @@
     @yield('Style')
     @toastr_css
 
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-        }
-    </style>
-    <link rel="short" href="https://fonts.gstatic.com" crossorigin>
+    {{--    <style>--}}
+    {{--        body {--}}
+    {{--            font-family: 'Cairo', sans-serif;--}}
+    {{--        }--}}
+    {{--    </style>--}}
+    {{--    <link rel="short" href="https://fonts.gstatic.com" crossorigin>--}}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+    {{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
     <title>Header Dark </title>
     <meta name="description" content="Header dark theme example"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -28,24 +28,22 @@
     <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}" rel="stylesheet"
           type="text/css"/>
-
     <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet"
-          type="text/css">
+          type="text/css"
+    >
 
     <!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;900&display=swap" rel="stylesheet">
+    {{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+    {{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+    {{--    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;900&display=swap" rel="stylesheet">--}}
     <link rel="shortcut icon" href="{{asset('assets/media/logos/logo-letter-7.png')}}" type="image/x-icon">
 
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 <body id="kt_body"
-      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading"
-      style="font-family: 'Cairo', sans-serif;"
->
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading body">
 <!--begin::Main-->
 <!--begin::Header Mobile-->
 <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
@@ -268,6 +266,14 @@
 												</span>
                                             </li>
                                             <li class="menu-item" aria-haspopup="true">
+                                                <a href="{{route('Options.index')}}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text"> انواع المصاريف التشغيلية</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item" aria-haspopup="true">
                                                 <a href="{{route('Expense.index')}}" class="menu-link">
                                                     <i class="menu-bullet menu-bullet-dot">
                                                         <span></span>
@@ -275,6 +281,7 @@
                                                     <span class="menu-text"> المصاريف التشغيلية</span>
                                                 </a>
                                             </li>
+
 
                                         </ul>
                                     </div>
@@ -1613,10 +1620,10 @@
 <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
     <!--begin::Header-->
     <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-        <h3 class="font-weight-bold m-0">User Profile
-            <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
-                <i class="ki ki-close icon-xs text-muted"></i>
-            </a>
+        <h3 class="font-weight-bold m-0">User Profile</h3>
+        <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+            <i class="ki ki-close icon-xs text-muted"></i>
+        </a>
     </div>
     <!--end::Header-->
     <!--begin::Content-->
@@ -2556,128 +2563,127 @@
         </li>
         <!--end::Item-->
     </ul>
-    <!--end::Sticky Toolbar-->
-    <!--begin::Demo Panel-->
-    <div id="kt_demo_panel" class="offcanvas offcanvas-right p-10">
-        <!--begin::Header-->
-        <div class="offcanvas-header d-flex align-items-center justify-content-between pb-7">
-            <h4 class="font-weight-bold m-0">Select A Demo</h4>
-            <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_demo_panel_close">
-                <i class="ki ki-close icon-xs text-muted"></i>
-            </a>
-        </div>
-        <!--end::Header-->
-        <!--begin::Content-->
-        <div class="offcanvas-content">
-            <!--begin::Wrapper-->
-            <!--end::Wrapper-->
-            <!--begin::Purchase-->
-            <div class="offcanvas-footer">
-                <a href="https://1.envato.market/EA4JP" target="_blank"
-                   class="btn btn-block btn-danger btn-shadow font-weight-bolder text-uppercase">Buy
-                    Metronic
-                    Now!</a>
-            </div>
-            <!--end::Purchase-->
-        </div>
-        <!--end::Content-->
+</div>
+<!--end::Sticky Toolbar-->
+<!--begin::Demo Panel-->
+<div id="kt_demo_panel" class="offcanvas offcanvas-right p-10">
+    <!--begin::Header-->
+    <div class="offcanvas-header d-flex align-items-center justify-content-between pb-7">
+        <h4 class="font-weight-bold m-0">Select A Demo</h4>
+        <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_demo_panel_close">
+            <i class="ki ki-close icon-xs text-muted"></i>
+        </a>
     </div>
-    <!--end::Demo Panel-->
-    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-    <!--begin::Global Config(global config for global JS scripts)-->
-    <script>var KTAppSettings = {
-            "breakpoints": {"sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400},
-            "colors": {
-                "theme": {
-                    "base": {
-                        "white": "#ffffff",
-                        "primary": "#3699FF",
-                        "secondary": "#E5EAEE",
-                        "success": "#1BC5BD",
-                        "info": "#8950FC",
-                        "warning": "#FFA800",
-                        "danger": "#F64E60",
-                        "light": "#E4E6EF",
-                        "dark": "#181C32"
-                    },
-                    "light": {
-                        "white": "#ffffff",
-                        "primary": "#E1F0FF",
-                        "secondary": "#EBEDF3",
-                        "success": "#C9F7F5",
-                        "info": "#EEE5FF",
-                        "warning": "#FFF4DE",
-                        "danger": "#FFE2E5",
-                        "light": "#F3F6F9",
-                        "dark": "#D6D6E0"
-                    },
-                    "inverse": {
-                        "white": "#ffffff",
-                        "primary": "#ffffff",
-                        "secondary": "#3F4254",
-                        "success": "#ffffff",
-                        "info": "#ffffff",
-                        "warning": "#ffffff",
-                        "danger": "#ffffff",
-                        "light": "#464E5F",
-                        "dark": "#ffffff"
-                    }
+    <!--end::Header-->
+    <!--begin::Content-->
+    <div class="offcanvas-content">
+        <!--begin::Wrapper-->
+        <!--end::Wrapper-->
+        <!--begin::Purchase-->
+        <div class="offcanvas-footer">
+            <a href="https://1.envato.market/EA4JP" target="_blank"
+               class="btn btn-block btn-danger btn-shadow font-weight-bolder text-uppercase">Buy
+                Metronic
+                Now!</a>
+        </div>
+        <!--end::Purchase-->
+    </div>
+    <!--end::Content-->
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script>
+    var KTAppSettings = {
+        "breakpoints": {"sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400},
+        "colors": {
+            "theme": {
+                "base": {
+                    "white": "#ffffff",
+                    "primary": "#3699FF",
+                    "secondary": "#E5EAEE",
+                    "success": "#1BC5BD",
+                    "info": "#8950FC",
+                    "warning": "#FFA800",
+                    "danger": "#F64E60",
+                    "light": "#E4E6EF",
+                    "dark": "#181C32"
                 },
-                "gray": {
-                    "gray-100": "#F3F6F9",
-                    "gray-200": "#EBEDF3",
-                    "gray-300": "#E4E6EF",
-                    "gray-400": "#D1D3E0",
-                    "gray-500": "#B5B5C3",
-                    "gray-600": "#7E8299",
-                    "gray-700": "#5E6278",
-                    "gray-800": "#3F4254",
-                    "gray-900": "#181C32"
+                "light": {
+                    "white": "#ffffff",
+                    "primary": "#E1F0FF",
+                    "secondary": "#EBEDF3",
+                    "success": "#C9F7F5",
+                    "info": "#EEE5FF",
+                    "warning": "#FFF4DE",
+                    "danger": "#FFE2E5",
+                    "light": "#F3F6F9",
+                    "dark": "#D6D6E0"
+                },
+                "inverse": {
+                    "white": "#ffffff",
+                    "primary": "#ffffff",
+                    "secondary": "#3F4254",
+                    "success": "#ffffff",
+                    "info": "#ffffff",
+                    "warning": "#ffffff",
+                    "danger": "#ffffff",
+                    "light": "#464E5F",
+                    "dark": "#ffffff"
                 }
             },
-            "font-family": "Poppins"
-        };</script>
-    <!--end::Global Config-->
-    <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
-    <script src="{{asset('assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-    <!--end::Global Theme Bundle-->
-    <!--begin::Page Vendors(used by this page)-->
-    <script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
-    <!--end::Page Vendors-->
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-{{--<script src="{{asset('assets/plugins/custom/datatables/pdfmake.min.js.map')}}"></script>--}}
+            "gray": {
+                "gray-100": "#F3F6F9",
+                "gray-200": "#EBEDF3",
+                "gray-300": "#E4E6EF",
+                "gray-400": "#D1D3E0",
+                "gray-500": "#B5B5C3",
+                "gray-600": "#7E8299",
+                "gray-700": "#5E6278",
+                "gray-800": "#3F4254",
+                "gray-900": "#181C32"
+            }
+        },
+        "font-family": "Poppins"
+    };
+
+</script>
+
+@toastr_js
+@toastr_render
+
+<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+<script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
+<script src="{{asset('assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
+<script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
+<!--end::Global Theme Bundle-->
+<!--begin::Page Vendors(used by this page)-->
+<script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 <!--end::Page Vendors-->
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="{{asset('assets/js/pages/widgets.js')}}"></script>
-    <!--end::Page Scripts-->
-    @toastr_js
-    @toastr_render
-    @yield('js')
-    <script>
-        $(document).ready(function () {
-            $('data-table').DataTable({
-                dom: "Blfrtip",
-                columnDefs: [{
-                    orderable: false,
-                    targets: -1
-                }]
-            });
+<!--begin::Page Scripts(used by this page)-->
 
-            // $('#Box_id').select2({
-            //     placeholder: "اختر القيمة"
-            // });
-            $('.kt_select2_2').select2({
-                placeholder: "اختر القيمة",
-                dir: "rtl"
+<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{asset('assets/js/pages/crud/datatables/advanced/column-rendering.js')}}"></script>
+<!--end::Page Vendors-->
+<!--begin::Page Scripts(used by this page)-->
+<script src="{{asset('assets/js/pages/widgets.js')}}"></script>
+<!--end::Page Scripts-->
+<script src="assets/js/pages/crud/forms/widgets/select2.js"></script>
 
-            });
+@yield('js')
+<script>
+    $(document).ready(function () {
 
+        // $('#Box_id').select2({
+        //     placeholder: "اختر القيمة"
+        // });
+        $('.kt_select2_2').select2({
+            placeholder: "اختر القيمة",
+            dir: "rtl"
         });
+    });
 
-    </script>
+</script>
+
 </body>
 <!--end::Body-->
 </html>

@@ -30,7 +30,7 @@ class Counter extends Model
 
     public function getActive()
     {
-        return $this->is_active == 1 ? 'مفعل' : 'غير مفعل';
+        return $this->active == 1 ? 'مفعل' : 'غير مفعل';
 
     }
 

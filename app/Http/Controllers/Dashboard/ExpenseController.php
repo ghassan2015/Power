@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Requests\ExpenseRequest;
 use App\Models\Expense;
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use Illuminate\Http\Request;
 use Datatables;
 
@@ -17,14 +19,15 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $button = '';
+        $Options = Option::all();
         if ($request->ajax()) {
             $data = Expense::latest()->get();
             return \Yajra\DataTables\DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $button = '<a name="edit" href="' . url("/Dashboard/Expense/$data->id/edit") . '" . id="' . $data->id . '" class="edit btn btn-primary btn-sm"><span><i class="fas fa-edit"></i></span>تعديل</a>';
+                    $button = '<a name="edit" id="' . $data->id . '"   Name_Expense="' . $data->Name . '" Option_id="' . $data->Option_id . '"  Option_Name="' . $data->Option->Name . '" Price="' . $data->Price . '"  class="edit btn btn-primary btn-sm edit_Expense"><span><i class="fas fa-edit"></i></span>تعديل</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
+                    $button .= '<button type="button" name="delete" Name_Expense="' . $data->Name . '" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><span><i class="fas fa-trash-alt"></i></span>حدف</button>';
                     return $button;
 
 
@@ -33,21 +36,17 @@ class ExpenseController extends Controller
                 ->make(true);
 
         }
-        return view('Pages.Expense.index');
+        return view('Pages.Expense.index', compact('Options'));
     }
 
-    public function create()
-    {
-        return view('Pages.Expense.create');
 
-    }
-
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
         try {
             $Expense = new Expense();
             $Expense->Name = $request->Name;
             $Expense->Price = $request->Value;
+            $Expense->Option_id = $request->Option_id;
             $Expense->save();
             toastr()->success('تم عملية اضافة المصروفات بنجاح');
             return redirect()->route('Expense.index');
@@ -66,14 +65,15 @@ class ExpenseController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(ExpenseRequest $request)
     {
         try {
-            $Expense = Expense::findOrFail($id);
+            $Expense = Expense::findOrFail($request->id);
             $Expense->Name = $request->Name;
             $Expense->Price = $request->Value;
+            $Expense->Option_id = $request->Option_id;
             $Expense->save();
-            toastr()->success('تم عملية اضافة المصروفات بنجاح');
+            toastr()->success('تم عملية تعديل المصروفات بنجاح');
             return redirect()->route('Expense.index');
         } catch (\Exception $ex) {
             toastr()->error('هناك خطا ما يرجىء المحاولة لاحقا ');
@@ -81,10 +81,10 @@ class ExpenseController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
 
-        $box = Expense::where('id', $id)->delete();
+        Expense::where('id', $request->id)->delete();
         toastr()->success('تمت عملية التعديل بنجاح');
         return redirect()->route('Expense.index');
     }

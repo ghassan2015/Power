@@ -81,23 +81,6 @@
 
     </div>
 
-    <div id="confirmModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h2 class="modal-title">Confirmation</h2>
-                </div>
-                <div class="modal-body">
-                    <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- add_modal_Grade -->
@@ -106,31 +89,54 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة مصاريف تشغيلية جديد</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة مصاريف تشغيلية جديدة</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form class="needs-validation" novalidate action="{{route('Expense.store')}}" method="post">
                     @csrf
-
                     <div class="modal-body">
+
                         <div class="form-group">
-                            <label for="exampleInputEmail1">اسم المصروفات</label>
-                            <input type="text" name="Name" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="ادخل اسم المصروفات التشغيلية" required>
+                            <label for="exampleInputPassword1">اسم المصاريف</label>
+                            <input type="text" name="Name" class="form-control"
+                                   id="Name"
+                                   placeholder="الرجاء ادخل مكان الصندوق هنا" required>
                             <div class="invalid-feedback">
+                                الرجاء ادخال الاسم الخاص بالمصاريف
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1"> نوع المصاريف </label>
+                        </div>
+                        <div class="form-group">
+
+                            <select name="Option_id" class="custom-select kt_select2_2"
+                                    onclick="console.log($(this).val())" style="width: 100%">
+                                <!--placeholder-->
+                                @foreach ( $Options as  $option)
+                                    <option
+                                        value="{{ $option->id }}">
+                                        {{ $option->Name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('Box_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">قيمة المصاريف</label>
+                            <input type="text" name="Value" class="form-control" id="Value"
+                                   aria-describedby="emailHelp" placeholder="ادخل رقم العداد" required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخل قيمة المصاريف
                             </div>
                             <small id="emailHelp" class="form-text text-muted"></small>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">قيمةالمصروفات</label>
-                            <input type="text" name="Value" class="form-control" id="exampleInputPassword1"
-                                   placeholder="الرجاءادخل قيمة المصروفات" required>
-                            <div class="invalid-feedback">
-                                ادخل قيمة المصروفات
-                            </div>
-                        </div>
+
 
                     </div>
                     <div class="modal-footer">
@@ -144,42 +150,151 @@
                         </button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
+    <div class="modal fade" id="edit_Expense_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="text-align: right">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة مصاريف تشغيلية جديدة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="needs-validation" novalidate action="{{route('Expense.update','test')}}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <input type="hidden" name="id" class="form-control"
+                               id="Expense_id"
+                               placeholder="الرجاء ادخل مكان الصندوق هنا" required>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">اسم المصاريف</label>
+                            <input type="text" name="Name" class="form-control"
+                                   id="Name_Expense"
+                                   placeholder="الرجاء ادخل مكان الصندوق هنا" required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخال الاسم الخاص بالمصاريف
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1"> نوع المصاريف </label>
+                        </div>
+                        <div class="form-group">
+
+                            <select name="Option_id" class="custom-select kt_select2_2"
+                                    onclick="console.log($(this).val())" style="width: 100%">
+                                <!--placeholder-->
+                                @foreach ( $Options as  $option)
+                                    <option
+                                        value="{{ $option->id }}">
+                                        {{ $option->Name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('Box_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">قيمة المصاريف</label>
+                            <input type="text" name="Value" class="form-control" id="Price"
+                                   aria-describedby="emailHelp" placeholder="ادخل رقم العداد" required>
+                            <div class="invalid-feedback">
+                                الرجاء ادخل قيمة المصاريف
+                            </div>
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
 
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><span><i class="fa fa-paper-plane"
+                                                                               aria-hidden="true"></i></span>تاكيد
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                class="fa fa-window-close" aria-hidden="true"></i>
+                            اغلاق
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="confirmModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+                        id="exampleModalLabel">
+                        حذف العداد
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('Expense.destroy', 'test') }}" method="post">
+                        {{ method_field('Delete') }}
+                        @csrf
+                        <h4>هل انت متاكدمن عملية الحذف</h4>
+                        <input type="hidden">
+                        <input id="Delete_id" type="hidden" name="id" class="form-control">
+                        <input id="Name_Expense_delete" type="text" name="Name_Delete" class="form-control" disabled>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" name="ok_button" id="ok_button" class="btn btn-danger"><span><i
+                                        class="fa fa-paper-plane"
+                                        aria-hidden="true"></i></span>تاكيد
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                    class="fa fa-window-close" aria-hidden="true">الغاء</i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript">
         box_id = '';
+
         $(document).on('click', '.delete', function () {
-            box_id = $(this).attr('id');
-            console.log(box_id);
+            Expense_id = $(this).attr('id');
+            Name_Expense = $(this).attr('Name_Expense');
+            $('#Delete_id').val(Expense_id);
+            $('#Name_Expense_delete').val(Name_Expense);
+
             $('#confirmModal').modal('show');
         });
+        $(document).on('click', '.edit_Expense', function (e) {
+            $('#edit_Expense_modal').modal('show');
+            var Expense_id = $(this).attr('id');
+            $('#Expense_id').val(Expense_id);
 
-        $('#ok_button').click(function () {
-            $.ajax({
-                url: "/Dashboard/Expense/destroy/" + box_id,
-                beforeSend: function () {
-                    $('#ok_button').text('Deleting...');
-                }
-                ,
-                success: function (data) {
-                    setTimeout(function () {
-                        $('#confirmModal').modal('hide');
-                        $('.data-table').DataTable().ajax.reload();
-                    }, 2000);
-                }
-            })
+            var Name = $(this).attr('Name_Expense');
+            $('#Name_Expense').val(Name);
+            var Price = $(this).attr('Price');
+            $('#Price').val(Price);
+            var Option_Name = $(this).attr('Option_Name');
+            var Option_id = $(this).attr('Option_id');
+            console.log(Option_id);
+
+
+            $('#Option_id').append(`<option value="${Option_id}">
+                                       ${Option_Name}
+                                  </option>`);
+            var Box_id = $(this).attr('id');
+            $('#id').val(Box_id);
         });
+
 
         $(function () {
 

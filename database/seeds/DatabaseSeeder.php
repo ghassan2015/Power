@@ -13,13 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $states = ['غزة', 'الشمال', 'الوسطى', 'الجنوب',];
-        foreach ($states as $state)
-            State::create(['Name' => $state]);
+//        $states = ['غزة', 'الشمال', 'الوسطى', 'الجنوب',];
+//        foreach ($states as $state)
+//            State::create(['Name' => $state]);
         //   $this->call(UserSeeder::class);
-        factory('App\Models\Box', 20)->create();
-        factory(\App\Models\Counter::class, 50)->create();
-        factory(\App\Models\Customer::class, 10)->create();
+//        factory('App\Models\Box', 20)->create();
+//        factory(\App\Models\Counter::class, 50)->create();
+//        factory(\App\Models\Customer::class, 10)->create();
+//        $this->call(PermissionTableSeeder::class);
+
 //        $user = Customer::create([
 ////            'name' => 'Ghassan Ahmed',
 ////            'email' => 'gssan1018@gmail.com',
@@ -29,8 +31,7 @@ class DatabaseSeeder extends Seeder
 ////            'is_Active' => 1,
 ////            'unit' => 3.3
 ////        ]);
-        // $this->call(PermissionTableSeeder::class);
 
-        // $this->call(CreateAdminUserSeeder::class);
+        $this->call(CreateAdminUserSeeder::class);
     }
 }

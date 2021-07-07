@@ -21,19 +21,17 @@ Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard', 'middleware '
         Route::get('/', 'BoxController@index')->name('Boxs.index');
         Route::post('/', 'BoxController@store')->name('Boxs.store');
         Route::get('/{id}/edit', 'BoxController@edit')->name('Boxs.edit');
-        Route::put('/update/{id}', 'BoxController@update')->name('Boxs.update');
-        Route::get('/destroy/{id}', 'BoxController@destroy')->name('Box.destroy');
-        Route::get('/pdf', 'BoxController@createPDF');
+        Route::put('/update/', 'BoxController@update')->name('Boxs.update');
+        Route::delete('/destroy/', 'BoxController@destroy')->name('Box.destroy');
     });
     //Start Counter Controller
     //Route::resource('Counters', 'CounterController');
     Route::get('Counters', 'CounterController@index')->name('Counters.index');
     Route::get('Counters/Create', 'CounterController@Create')->name('Counters.Create');
-
     Route::post('Counters', 'CounterController@store')->name('Counters.store');
     Route::get('Counters/{id}/edit', 'CounterController@edit')->name('Counters.edit');
     Route::put('Counters/update/{id}', 'CounterController@update')->name('Counters.update');
-    Route::get('Counters/destroy/{id}', 'CounterController@destroy')->name('Counters.destroy');
+    Route::delete('Counters/destroy/', 'CounterController@destroy')->name('Counters.destroy');
     //  Route::get('Counters/destroy/{id}', 'BoxController@destroy')->name('Box.destroy');
     //end Counter Controller
 
@@ -75,7 +73,14 @@ Route::group(['namespace' => 'Dashboard', 'prefix' => 'Dashboard', 'middleware '
     Route::post('Expense', 'ExpenseController@store')->name('Expense.store');
     Route::get('Expense/{id}/edit', 'ExpenseController@edit')->name('Expense.edit');
     Route::put('Expense/update/{id}', 'ExpenseController@update')->name('Expense.update');
-    Route::get('Expense/destroy/{id}', 'ExpenseController@destroy')->name('Expense.destroy');
+    Route::delete('Expense/destroy/{id}', 'ExpenseController@destroy')->name('Expense.destroy');
+
+    Route::get('Options', 'OptionController@index')->name('Options.index');
+    Route::post('Options', 'OptionController@store')->name('Options.store');
+    Route::get('Options/{id}/edit', 'OptionController@edit')->name('Options.edit');
+    Route::put('Options/update/{id}', 'OptionController@update')->name('Options.update');
+    Route::delete('Options/destroy/{id}', 'OptionController@destroy')->name('Options.destroy');
+
 
     Route::get('Profile/', 'ProfileController@Profile')->name('User.Profile');
     Route::put('Profile/{id}/Update/', 'ProfileController@UpdateProfile')->name('User.Profile.update');

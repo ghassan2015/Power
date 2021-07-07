@@ -75,7 +75,7 @@
                                             <span class="switch switch-outline switch-icon switch-success">
                                                 <label>
                                                     <input type="checkbox" value="1"
-                                                           @if($counter -> is_active == 1)checked @endif
+                                                           @if($counter -> active == 1)checked @endif
                                                            name="active"/>
                                                     <span></span>
                                                 </label>
